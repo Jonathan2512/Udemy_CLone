@@ -1,0 +1,84 @@
+.card {
+  .img-top {
+    margin: 0 auto;
+    img {
+      height: 200px;
+    }
+  }
+  .card-body {
+    padding: 10px;
+    text-align: center;
+    background-color: $color-gray-6;
+    .card-text {
+      @include text($color-black-0, $fs-0, $fw-bold-0);
+    }
+    span {
+      display: block;
+      font-size: $fs-1 + 2;
+      @include text($color-black-0, $fs-0, $fw-bold-0);
+      &.author {
+        color: $color-gray-4;
+        height: 22px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 10px;
+      }
+      svg {
+        color: $color-yellow;
+      }
+    }
+    .detailBtn {
+      a {
+        text-decoration: none;
+      }
+      span {
+        color: #fff;
+      }
+      .price {
+        text-align: right;
+        margin-bottom: 0;
+        span {
+          display: inline;
+          &:nth-child(1) {
+            @include text($color-gray-4, $fs-1, $fw-normal);
+          }
+          &:nth-child(2) {
+            @include text($color-black-0, $fs-0, $fw-bold-0);
+          }
+        }
+      }
+    }
+  }
+}
+
+.course-popup {
+  background-color: $color-white-0;
+  .preview-pic {
+    border: 1px solid $color-blue;
+    img {
+      height: 200px;
+      width: 100%;
+    }
+  }
+  .details {
+    .product-title {
+      text-align: center;
+      @include text($color-blue, $fs-3 + 5, $fw-bold-0);
+      margin-top: 20px;
+    }
+    .product-description {
+      padding: 20px 20px;
+      letter-spacing: 1px;
+      line-height: 1.5rem;
+      @include text($color-black-0, $fs-0, $fw-bold-0);
+    }
+    .author {
+      @include text($color-gray-4, $fs-0, $fw-normal);
+      text-align: center;
+      padding-bottom: 10px;
+      span {
+        font-weight: 900;
+      }
+    }
+  }
+}

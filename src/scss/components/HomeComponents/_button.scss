@@ -1,0 +1,65 @@
+.btn--white {
+  @include button(
+    $color-gray-4,
+    $fs-0,
+    $color-white-0,
+    $pd-1 + 1,
+    $pd-1 + 2,
+    $color-gray-3,
+    $color-black-0,
+    $color-white-0,
+    $color-gray-3
+  );
+}
+.btn--purple {
+  @include button(
+    $color-white-0,
+    $fs-0,
+    $color-purple,
+    $pd-1 + 1,
+    $pd-1 + 2,
+    $color-gray-3,
+    $color-white-0,
+    $color-purple,
+    $color-gray-3
+  );
+}
+.btn--search {
+  @include button(
+    $color-orange,
+    $fs-2,
+    $color-white-0,
+    $pd-0,
+    $pd-0,
+    $color-white-0,
+    $color-white-0,
+    $color-orange,
+    $color-orange
+  )
+}
+.btn--gradient{
+  @include button (
+    $color-white-0,
+    $fs-0,
+    $color-orange,
+    $pd-1,
+    $pd-1,
+    $color-orange,
+    $color-white-0,
+    $color-red-1,
+    $color-red-1
+  )
+}
+.btn--dropup{
+  @include button(
+    $color-gray-4,
+    $fs-1,
+    $color-white-0,
+    $pd-1,
+    $pd-1,
+    $color-gray-4,
+    $color-black-0,
+    $color-black-dark,
+    $color-black
+  )
+}

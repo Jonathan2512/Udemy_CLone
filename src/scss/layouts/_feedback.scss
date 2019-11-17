@@ -1,0 +1,125 @@
+.feedback-section {
+  margin: 30px auto;
+  padding: 30px 0;
+  background-color: $color-gray-5;
+  .container {
+    max-width: 1500px;
+    .feedback-title {
+      text-align: left;
+      padding: 10px 10px;
+    }
+    .feedback-content {
+      .slick-slider {
+        position: relative;
+        .slick-dots {
+          display: none !important;
+        }
+        button.slick-prev,
+        button.slick-next {
+          position: absolute;
+          top: 15%;
+          z-index: 100;
+          visibility: hidden;
+          &::after {
+            z-index: 100;
+            visibility: visible;
+            display: block;
+            position: absolute;
+            background-color: $color-white-0;
+            @include text($color-blue, $fs-3, $fw-bold-1);
+            top: 155%;
+            width: 50px;
+            height: 50px;
+            line-height: 45px;
+            padding: auto auto;
+            opacity: 1;
+            border-radius: 50%;
+            border: 1px solid $color-gray-2;
+          }
+          &.slick-prev {
+            left: -20px;
+
+            &::after {
+              content: "<";
+            }
+          }
+          &.slick-next {
+            right: 20px;
+            &::after {
+              content: ">";
+            }
+          }
+        }
+        .slick-list {
+          .slick-slide {
+            .card {
+              width: 90% !important;
+              .card-top {
+                padding-top: 20px;
+                padding-bottom: 10px;
+                span {
+                  @include text($color-black-0, $fs-0 + 1, $fw-bold-0);
+                }
+                img {
+                  display: inline-block;
+                  width: 64px;
+                  height: 64px;
+                  border-radius: 50%;
+                  margin-right: 10px;
+                }
+              }
+              .card-body {
+                padding-top: 0;
+                .card-text {
+                  height: 42px;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    .feedback-footer {
+      text-align: center;
+      .partner-text {
+        padding-top: 32px;
+        @include text($color-gray-4, $fs-1, $fw-normal);
+      }
+      .partners-logo {
+        display: flex;
+        justify-content: center;
+        padding-top: 32px;
+        .logo-item {
+          padding: 0 30px;
+        }
+      }
+      .student-intro {
+        text-align: center;
+        padding-top: 32px;
+        .student-intro-item {
+          width: 40%;
+          margin: 0 auto;
+          h4 {
+            @include text($color-black-0, $fs-2, $fw-bold-0);
+          }
+        }
+        .teach-item {
+          border-right: 1px solid $color-gray-7;
+        }
+      }
+    }
+  }
+}
+@include mediaQuery("small") {
+  .feedback-footer {
+    .partners-logo {
+      flex: wrap;
+      flex-direction: column;
+      .logo-item {
+        margin-top: 10px;
+      }
+    }
+  }
+}

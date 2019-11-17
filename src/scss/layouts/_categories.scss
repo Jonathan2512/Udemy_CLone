@@ -1,0 +1,21 @@
+.categories-section {
+  margin: 30px auto;
+  text-align: left;
+  .container {
+    max-width: 1500px;
+    .categories-content {
+      .card-deck {
+        margin: 10px auto;
+        @include text($color-black-1, $fs-2 + 2, $fw-normal);
+        .card {
+          svg {
+            padding-right: 8px;
+            font-size: 2rem;
+            padding-top: 0.5rem;
+          }
+        }
+        @include HoverShadow();
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+.registered-title, .finding-title {
+    background: linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%);
+    color: #fff;
+    border-radius: 10px;
+    padding: 20px 10px;
+}
+
+.rotate__Wrapper-sc-1b62bh9-0 {
+    left: 50%;
+    transform: translate(-50%);
+    margin: 10% 0;
+}
+
+@keyframes zoomIn {
+    from {
+        opacity: 0;
+        transform: scale3d(.3, .3, .3);
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+.zoomIn {
+    animation-name: zoomIn;
+}

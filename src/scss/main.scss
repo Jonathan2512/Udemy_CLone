@@ -1,0 +1,27 @@
+@import "./base/reset";
+
+@import "./helpers/variables";
+@import "./helpers/mixin";
+
+@import "./components/HomeComponents/button";
+@import "./components/HomeComponents/course";
+
+@import "./base/customize";
+
+// Home
+@import "./pages/Home/signUp";
+@import "./pages/Home/signIn";
+@import "./pages/Home/courseDetail";
+@import "./pages//Home/userProfile";
+
+@import "./layouts/header";
+@import "./layouts/banner";
+@import "./layouts/intro";
+@import "./layouts/courses";
+@import "./layouts//recom";
+@import "./layouts/categories";
+@import "./layouts/feedback";
+@import "./layouts/footer";
+
+// admin
+@import "./components/AdminComponents/chart.scss";

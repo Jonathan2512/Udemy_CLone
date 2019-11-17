@@ -1,0 +1,109 @@
+.emp-profile {
+  padding: 3%;
+  margin-top: 3%;
+  margin-bottom: 3%;
+  border-radius: 0.5rem;
+  background: #fff;
+  .profile-img {
+    position: relative;
+    overflow: hidden;
+    margin-top: -20%;
+    width: 70%;
+    border: none;
+    border-radius: 0;
+    font-size: 15;
+    input.file {
+      position: absolute;
+      opacity: 0;
+      right: 0;
+      top: 0;
+    }
+  }
+  .profile-head {
+    h5 {
+      color: $color-black-2;
+    }
+    h6 {
+      color: $color-purple;
+      margin-bottom: 5%;
+    }
+    .nav-tabs {
+      margin-bottom: 5%;
+      .nav-link {
+        font-weight: 600;
+        color: $color-black-2;
+        border: none;
+        &.active {
+          border: none;
+          border-bottom: 2px solid $color-purple;
+        }
+      }
+    }
+  }
+  .profile-work {
+    padding: 14%;
+    margin-top: -15%;
+    p {
+      font-size: 12px;
+      color: #818182;
+      font-weight: 600;
+      margin-top: 10%;
+    }
+    li {
+      color: #495057;
+      font-weight: 600;
+      font-size: 14px;
+      list-style: none;
+    }
+  }
+  .profile-tab {
+    label {
+      font-weight: 600;
+    }
+    p {
+      font-weight: 600;
+      color: $color-purple;
+    }
+  }
+}
+
+@include mediaQuery("small") {
+  .profile-title {
+    position: relative;
+    .profile-img {
+      margin: 0 auto;
+      img {
+        height: 300px;
+        margin-top: 50px;
+        padding-left: 30px;
+      }
+    }
+    .profile-head {
+      text-align: center;
+      margin: 20px auto;
+      padding-left: 20px;
+      .nav-tabs {
+        position: absolute;
+        top: 100px;
+        z-index: 10;
+      }
+    }
+    .edit-btn {
+      position: absolute;
+      top: 5px;
+      right: 0px;
+      z-index: 10;
+    }
+  }
+  .profile-content {
+    position: relative;
+    top: 80px;
+    padding-bottom: 50px;
+    .profile-content-1 {
+      width: 40%;
+    }
+    .profile-content-2 {
+      width: 50%;
+    }
+  }
+}
