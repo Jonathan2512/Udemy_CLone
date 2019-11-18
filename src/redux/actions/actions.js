@@ -114,7 +114,8 @@ export const actGetUserInfo = () => {
         }
         callAPI("QuanLyNguoiDung/ThongTinTaiKhoan", "POST", data, headers)
             .then(res => {
-                let userInfo = res.data
+                let userInfo = res.data;
+                console.log(userInfo)
                 dispatch({
                     type: actionType.GET_USER_INFO,
                     userInfo: userInfo
@@ -189,6 +190,37 @@ export const actDeregisterCourse = (courseID) => {
             })
             .catch(err => {
                 console.log(err.response)
+            })
+    }
+}
+
+// admin module
+export const actDeleteCourse = (courseID, history) => {
+    return () => {
+        const admin = JSON.parse(localStorage.getItem("adminLogin"));
+        let headers = { Authorization: `Bearer ${admin.accessToken}` };
+        callAPI(`QuanLyKhoaHoc/XoaKhoaHoc?MaKhoaHoc=${courseID}`, "DELETE", null, headers)
+            .then(res => {
+                console.log(res);
+                setTimeout(() => { history.go() }, 500);
+            })
+            .catch(err => {
+                console.log(err.response)
+            })
+    }
+}
+
+export const actEditCourse = (course) => {
+    return () => {
+        const admin = JSON.parse(localStorage.getItem("adminLogin"));
+        let data = { ...course, taiKhoanNguoiTao: admin.taiKhoan };
+        let headers = { Authorization: `Bearer ${admin.accessToken}` };
+        callAPI("api/QuanLyKhoaHoc/CapNhatKhoaHoc", "PUT", data, headers)
+            .then(res => {
+                console.log(res)
+            })
+            .catch(err => {
+                console.log(err)
             })
     }
 }

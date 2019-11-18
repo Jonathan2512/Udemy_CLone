@@ -71,7 +71,7 @@ class CourseListPage extends Component {
         let { Courses, keyword } = this.props;
 
         Courses = Courses.filter(course => {
-            return course.tenCourse.toLowerCase().includes(keyword.toLowerCase());
+            return course.tenKhoaHoc.toLowerCase().includes(keyword.toLowerCase());
         })
         if (Courses.length < 1) {
             return (
@@ -81,7 +81,11 @@ class CourseListPage extends Component {
             )
         }
         return Courses.map((course, index) => {
-            return <Course key={index} Course={course} />
+            return (
+                <div key={index} className="col-sm-4">
+                    <Course Course={course} />
+                </div>
+            )
         })
     }
     render() {

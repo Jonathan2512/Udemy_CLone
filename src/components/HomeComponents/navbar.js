@@ -100,7 +100,7 @@ class Navbar extends Component {
                             </a>
                             <ul className="exo-menu">
                                 <li className="drop-down">
-                                    <a href="/">
+                                    <a href="/course-list" target="_blank">
                                         <FontAwesomeIcon icon="align-justify" />
                                         Categories</a>
                                     {/*Drop Down*/}

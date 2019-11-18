@@ -5,6 +5,9 @@ import classNames from "classnames";
 import PropTypes from "prop-types";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
+import Tooltip from '@material-ui/core/Tooltip';
+import Fade from '@material-ui/core/Fade';
+
 // @material-ui/icons
 
 // core components
@@ -23,10 +26,35 @@ export default function CardHeader(props) {
     [classes.cardHeaderIcon]: icon,
     [className]: className !== undefined
   });
+
+  const hoverPopup = () => {
+    let { course, hovercontent } = props;
+    if (course !== undefined) {
+      return (
+        <div className="course-popup">
+          <div className="container-fliud">
+            <div className="preview-pic">
+              <img src={course.hinhAnh} alt="/" />
+            </div>
+          </div>
+          <div className="details">
+            <h3 className="product-title">{course.tenKhoaHoc}</h3>
+            <p className="product-description">{course.moTa}</p>
+            <p className="author">Created by <span>Jonathan Dennis.</span></p>
+          </div>
+        </div>)
+    }
+    if (hovercontent !== undefined) {
+      return <h3 style={{ color: "#ef5350", padding: "10px 10px 0 10px" }}>{hovercontent}</h3>
+    }
+    return <div></div>
+  }
   return (
-    <div className={cardHeaderClasses} {...rest}>
-      {children}
-    </div>
+    <Tooltip TransitionComponent={Fade} TransitionProps={{ timeout: 500 }} placement="right-start" title={hoverPopup()}>
+      <div className={cardHeaderClasses} {...rest}>
+        {children}
+      </div>
+    </Tooltip>
   );
 }
 

@@ -45,7 +45,7 @@ export default function Course(props) {
     }
 
     return (
-        <Tooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} placement="right-start" title={hoverPopup()}>
+        <Tooltip TransitionComponent={Fade} TransitionProps={{ timeout: 100 }} placement="right-start" title={hoverPopup()}>
             <div className="card border-info hoverShadow mx-1">
                 <div className="img-top">
                     <img src={Course.hinhAnh} alt="/" className="img-fluid" />

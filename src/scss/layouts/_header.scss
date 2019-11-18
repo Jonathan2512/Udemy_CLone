@@ -3,6 +3,7 @@
   .header__left {
     .navbar-brand {
       flex-grow: 1;
+      margin-right: 0;
       img {
         width: 100px;
       }
@@ -229,7 +230,11 @@
       }
     }
     .form-login {
+      margin-left: 20px;
       .profile-btn {
+        margin-right: 20px;
+      }
+      .signin-btn {
         margin-right: 20px;
       }
     }
@@ -262,7 +267,6 @@
       }
     }
     .form-login {
-      margin: 0 auto;
       margin-top: 20px;
       .profile-btn {
         margin-left: 55px;
@@ -271,9 +275,7 @@
         margin-right: 10px;
       }
       .signout-btn {
-        margin-top: 10px !important;
-        margin-left: 150px;
-        height: 20px;
+        margin: 10px 0 10px 130px;
       }
     }
   }

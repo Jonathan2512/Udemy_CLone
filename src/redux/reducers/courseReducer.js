@@ -6,7 +6,7 @@ let initialState = {
     courseList: [],
     course: {},
     keyword: "",
-    courseRegistered: {}
+    courseRegistered: {},
 }
 
 const courseReducer = (state = initialState, action) => {

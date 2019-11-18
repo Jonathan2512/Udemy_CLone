@@ -107,4 +107,12 @@
       margin-bottom: 20px;
     }
   }
+  @include mediaQuery("small") {
+    .register-btns {
+      display: flex;
+      button.add-to-cart {
+        padding: 1em 1em !important;
+      }
+    }
+  }
 }

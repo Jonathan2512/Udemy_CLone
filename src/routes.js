@@ -56,18 +56,18 @@ const adminRoutes = [
         component: AdminDashboard
     },
     {
-        path: '/admin/users-management',
-        exact: false,
-        name: "Users Management",
-        icon: SupervisorAccountIcon,
-        component: UsersManagement
-    },
-    {
         path: '/admin/courses-management',
         exact: false,
         name: "Courses Management",
         icon: MenuBookIcon,
         component: CoursesManagement
+    },
+    {
+        path: '/admin/users-management',
+        exact: false,
+        name: "Users Management",
+        icon: SupervisorAccountIcon,
+        component: UsersManagement
     },
     {
         path: '/admin/advanced-register',

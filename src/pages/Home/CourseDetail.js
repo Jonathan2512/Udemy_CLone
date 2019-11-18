@@ -63,12 +63,12 @@ function CourseDetail(props) {
                                     className='toast-container'
                                     toastClassName="dark-toast"
                                 />
-                                {localStorage.getItem(`${id}`) === null ?
-                                    (<div>
+                                {localStorage.getItem(`${id}`) !== null
+                                    ? (<button onClick={handleDeregisterCourse} className="btn btn-warning remove-from-cart" type="button">Deregister Course</button>)
+                                    : (<div className="register-btns">
                                         <button onClick={handleRegisterCourse} className="add-to-cart btn btn-default" type="button">Register Course</button>
                                         <button className="btn add-to-cart" type="button"><FontAwesomeIcon icon="heart" /></button>
-                                    </div>)
-                                    : (<button onClick={handleDeregisterCourse} className="btn btn-warning remove-from-cart" type="button">Deregister Course</button>)}
+                                    </div>)}
                             </div>
                         </div>
                     </div>
@@ -88,13 +88,17 @@ const mapDispatchToProps = dispatch => {
         },
         deregisterCourse: (courseID) => {
             dispatch(action.actDeregisterCourse(courseID))
+        },
+        getUserInfo: () => {
+            dispatch(action.actGetUserInfo())
         }
     }
 }
 
 const mapStateToProps = state => {
     return {
-        course: state.courseReducer.course
+        course: state.courseReducer.course,
+        userInfo: state.userReducer.userInfo
     }
 }
 

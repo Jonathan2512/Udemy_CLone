@@ -1,8 +1,13 @@
 import React, { useState, Fragment, useEffect } from 'react';
 import { RotateSpinner } from 'react-spinners-kit';
+import { connect } from 'react-redux';
 import { Route, Redirect, NavLink } from 'react-router-dom';
+
+
 import styles from './../assets/jss/material-ui/layouts/adminStyle';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+
+// @material-ui/core components
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Divider from "@material-ui/core/Divider";
@@ -13,19 +18,24 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import IconButton from "@material-ui/core/IconButton";
+import Badge from '@material-ui/core/Badge';
+import MenuItem from '@material-ui/core/MenuItem';
+import Input from '@material-ui/core/Input';
+import Menu from '@material-ui/core/Menu';
+import Button from '@material-ui/core/Button';
+
+// @material-ui/icons components
 import Search from '@material-ui/icons/Search';
 import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MenuIcon from "@material-ui/icons/Menu";
-import Input from '@material-ui/core/Input';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import Badge from '@material-ui/core/Badge';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
 
-import { adminRoutes } from './../routes'
-import Button from '@material-ui/core/Button';
+
+import { adminRoutes } from './../routes';
+import * as action from './../redux/actions/actions';
+
 import classNames from "classnames";
 
 const useStyles = makeStyles(styles);
@@ -104,7 +114,7 @@ const AdminLayout = props => {
     const renderMobileMenu = (
         <Menu
             className={classes.menuPaper}
-            // anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
             keepMounted
             transformOrigin={{ vertical: 'top', horizontal: 'left' }}
             open={sectionMobilOpen}
@@ -139,6 +149,11 @@ const AdminLayout = props => {
             </MenuItem>
         </Menu>
     );
+
+    const hanldeSearch = (keyword) => {
+        props.routes.OnKeyUp(keyword);
+    }
+
     return (
         <div className={classes.root}>
             {/* appbar */}
@@ -167,6 +182,7 @@ const AdminLayout = props => {
                                 input: classes.inputInput,
                             }}
                             inputProps={{ 'aria-label': 'search' }}
+                            onChange={event => { hanldeSearch(event.target.value) }}
                         />
                         <Button aria-label="edit" className={classes.searchIcon}>
                             <Search />
@@ -249,18 +265,19 @@ const AdminLayout = props => {
                 </Hidden>
             </nav>
             {/* Components of adminRoutes */}
+
             <main id="main-content" className={classes.content}>
                 <div className={classes.toolbar} />
                 {props.children}
             </main>
             {renderMobileMenu}
+
         </div>
     )
 }
 
-export default function AdminTemplate({ Component, ...props }) {
+function AdminTemplate({ Component, ...props }) {
     const [state, setState] = useState({ isLoading: true });
-
     useEffect(() => {
         setTimeout(() => {
             setState({
@@ -268,6 +285,7 @@ export default function AdminTemplate({ Component, ...props }) {
             })
         }, 500);
     }, []);
+
     return (
         state.isLoading ? (<RotateSpinner
             size={100}
@@ -291,3 +309,14 @@ export default function AdminTemplate({ Component, ...props }) {
 
     )
 }
+
+const mapDispatchToProps = dispatch => {
+    return {
+        OnKeyUp: keyword => {
+            dispatch(action.actFindingCourse(keyword))
+        }
+    }
+}
+
+
+export default connect(null, mapDispatchToProps)(AdminTemplate);

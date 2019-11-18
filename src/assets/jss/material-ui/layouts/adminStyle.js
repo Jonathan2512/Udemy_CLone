@@ -10,6 +10,7 @@ import {
 } from './../material-dashboard-react'
 
 const drawerWidth = 280;
+const appBarHeight = 64;
 
 const adminStyle = theme => ({
     root: {
@@ -295,13 +296,10 @@ const adminStyle = theme => ({
             color: whiteColor
         },
     },
-    menuPaper: {
-        top: "-70% !important",
-        left: "220px !important"
-    },
     content: {
         flexGrow: 1,
         padding: theme.spacing(3),
+        height: `calc(100% - ${appBarHeight}px)`
     }
 });
 

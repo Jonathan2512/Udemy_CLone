@@ -72,8 +72,8 @@ class RegisterCourse extends Component {
             )
         }
         else return (
-            <div className="alert alert-warning">
-                <strong>Warning!</strong> You Are Sign Out Now !!!.
+            <div className="alert alert-warning ">
+                <p className="container text-center mt-2 mb-2"> <strong>Warning!</strong> You Are Sign Out Now !!!.</p>
             </div>
         )
 
