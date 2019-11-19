@@ -1,6 +1,7 @@
 import * as actionType from './../constants/actionType';
 import { callAPI } from './../../utils/CallAPI';
 import * as toastify from '../../components/Custom/toastify';
+import { file } from '@babel/types';
 
 export const actUserSignUp = (user, history) => {
     return () => {
@@ -202,7 +203,39 @@ export const actDeleteCourse = (courseID, history) => {
         callAPI(`QuanLyKhoaHoc/XoaKhoaHoc?MaKhoaHoc=${courseID}`, "DELETE", null, headers)
             .then(res => {
                 console.log(res);
-                setTimeout(() => { history.go() }, 500);
+                toastify.WariningNotify("Deleted A Course !!!")
+                setTimeout(() => {
+                    history.go()
+                }, 500);
+            })
+            .catch(err => {
+                toastify.ErrNotify(err.response.data)
+            })
+    }
+}
+
+export const actAddCourse = (course, uploadFile, history) => {
+    return () => {
+        const admin = JSON.parse(localStorage.getItem("adminLogin"));
+        let formUpload = new FormData();
+        formUpload = uploadFile;
+        let data = { ...course, taiKhoanNguoiTao: admin.taiKhoan };
+        let headers = { Authorization: `Bearer ${admin.accessToken}` };
+        console.log(data);
+        callAPI("QuanLyKhoaHoc/ThemKhoaHoc", "POST", data, headers)
+            .then(res => {
+                console.log(res);
+                toastify.SuccessNotify("Successfull !!!");
+                callAPI("QuanLyKhoaHoc/UploadHinhAnhKhoaHoc", "POST", formUpload, headers)
+                    .then(res => {
+                        console.log(res);
+                        setTimeout(() => {
+                            history.go();
+                        }, 500)
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
             })
             .catch(err => {
                 console.log(err.response)
@@ -210,17 +243,21 @@ export const actDeleteCourse = (courseID, history) => {
     }
 }
 
-export const actEditCourse = (course) => {
-    return () => {
-        const admin = JSON.parse(localStorage.getItem("adminLogin"));
-        let data = { ...course, taiKhoanNguoiTao: admin.taiKhoan };
-        let headers = { Authorization: `Bearer ${admin.accessToken}` };
-        callAPI("api/QuanLyKhoaHoc/CapNhatKhoaHoc", "PUT", data, headers)
-            .then(res => {
-                console.log(res)
-            })
-            .catch(err => {
-                console.log(err)
-            })
+export const actUpdateModal = (editCourse) => {
+    return dispatch => {
+        let isAdd = false;
+        let isEdit = false;
+        if (editCourse === "") {
+            isAdd = true;
+        }
+        else {
+            isEdit = true;
+        }
+        dispatch({
+            type: actionType.UPDATE_MODAL,
+            editCourse,
+            isAdd,
+            isEdit
+        })
     }
 }

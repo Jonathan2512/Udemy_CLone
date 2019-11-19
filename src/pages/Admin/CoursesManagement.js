@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import * as action from './../../redux/actions/actions';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
@@ -8,8 +8,6 @@ import { makeStyles } from "@material-ui/core/styles";
 
 
 // @material-ui/icons
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from "@material-ui/icons/Add";
 import Fab from "@material-ui/core/Fab";
 
@@ -18,18 +16,18 @@ import GridItem from "./../../components/AdminComponents/Grid/GridItem";
 import GridContainer from "./../../components/AdminComponents/Grid/GridContainer.js";
 import Card from "./../../components/AdminComponents/Card/Card.js";
 import CardHeader from "./../../components/AdminComponents/Card/CardHeader.js";
-import CardBody from "./../../components/AdminComponents/Card/CardBody.js";
-import CardFooter from "./../../components/AdminComponents/Card/CardFooter.js";
+
 
 import { CircleArrow as ScrollUpButton } from 'react-scroll-up-button';
 import styles from '././../../assets/jss/material-ui/views/courseManagementStyle';
-import FormEditCourse from '../../Forms/FormEditCourse';
+import Course from '../../components/AdminComponents/Course/Course';
+import FormSaveCourse from '../../Forms/FormSaveCourse';
+import { ToastContainer } from 'react-toastify';
+
 
 const useStyles = makeStyles(styles);
 
 function CoursesManagement(props) {
-
-    console.log(props.history)
     const classes = useStyles();
 
     useEffect(() => {
@@ -37,59 +35,19 @@ function CoursesManagement(props) {
         props.getCourseCategory();
     }, [])
 
-    const handleDelete = (courseID) => {
-        let { history } = props;
-        props.deleteCourse(courseID, history);
-    }
 
-    const handleEdit = () => {
+    // const handleEdit = () => {
 
-    }
+    // }
+
+    // const handleAdd = () => {
+
+    // }
 
     const renderCourses = (courses) => {
+        let { history } = props;
         return courses.map((item, index) => {
-            return (
-                <GridItem key={index} xs={12} sm={6} md={3}>
-                    <Card>
-                        <CardHeader course={item} color="info"
-                            style={{
-                                height: "250px"
-                            }}>
-                            <img
-                                className="img-fluid"
-                                src={item.hinhAnh}
-                                style={{
-                                    height: "200px",
-                                    width: "450px"
-                                }}
-                                alt='/' />
-                        </CardHeader>
-                        <CardBody>
-                            <p className={classes.courseTitle}>{item.tenKhoaHoc}</p>
-                            <p className={classes.courseContent}>{item.moTa}</p>
-                        </CardBody>
-                        <CardFooter style={{ justifyContent: "flex-end" }}>
-                            <Fab className={classNames({
-                                [classes.fab]: true,
-                                [classes.edit]: true
-                            })}
-                                data-toggle="modal"
-                                data-target="#formEditUser"
-                            >
-                                <EditIcon />
-                            </Fab>
-                            <Fab className={classNames({
-                                [classes.fab]: true,
-                                [classes.delete]: true
-                            })}
-                                onClick={() => handleDelete(item.maKhoaHoc)}
-                            >
-                                <DeleteIcon />
-                            </Fab>
-                        </CardFooter>
-                    </Card>
-                </GridItem >
-            )
+            return <Course history={history} course={item} key={index} />
         })
     }
 
@@ -191,10 +149,14 @@ function CoursesManagement(props) {
             <Fab className={classNames({
                 [classes.fab]: true,
                 [classes.add]: true
-            })}>
+            })}
+                data-toggle="modal"
+                data-target="#formSaveCourse"
+                onClick={() => { props.updateModal("") }}>
                 <AddIcon />
             </Fab>
-            <FormEditCourse />
+            <FormSaveCourse history={props.history} courseCategory={props.courseCategory} />
+            <ToastContainer />
         </Fragment >
     )
 }
@@ -210,6 +172,9 @@ const mapDispatchToProps = dispatch => {
         },
         deleteCourse: (courseID, history) => {
             dispatch(action.actDeleteCourse(courseID, history))
+        },
+        updateModal: (course) => {
+            dispatch(action.actUpdateModal(course))
         }
     }
 }

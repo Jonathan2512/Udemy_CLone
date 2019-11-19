@@ -24,3 +24,29 @@
 .zoomIn {
     animation-name: zoomIn;
 }
+
+/* name, duration, timing function, delay, fill mode */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fadeIn {
+    /* Safari and Chrome */
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fadeIn {
+    -webkit-animation: fadeIn 500ms ease-in-out .1s both;
+    animation: fadeIn 500ms ease-in-out .1s both;
+}

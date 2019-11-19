@@ -7,6 +7,9 @@ let initialState = {
     course: {},
     keyword: "",
     courseRegistered: {},
+    editCourse: {},
+    isEdit: false,
+    isAdd: false
 }
 
 const courseReducer = (state = initialState, action) => {
@@ -24,6 +27,11 @@ const courseReducer = (state = initialState, action) => {
         case actionType.FIND_COURSE:
             state.keyword = action.keyword;
             return { ...state };
+        case actionType.UPDATE_MODAL:
+            state.editCourse = action.editCourse;
+            state.isAdd = action.isAdd;
+            state.isEdit = action.isEdit;
+            return { ...state }
         default:
             return { ...state }
     }

@@ -12,7 +12,11 @@ const courseManagementStyle = {
         color: infoColor[2],
         boxShadow: infoBoxShadow,
         fontSize: "30px",
-        fontWeight: "bold"
+        fontWeight: "bold",
+        maxWidth: "100%",
+        height: 42,
+        overflow: "hidden",
+        textOverflow: "ellipsis"
     },
     courseContent: {
         height: "42px",
