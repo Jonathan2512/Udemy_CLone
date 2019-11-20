@@ -27,12 +27,11 @@ const formSaveUserStyle = theme => ({
         width: "90%",
         minWidth: 120,
     },
+    imgForm: {
+        border: "1px solid rgba(0, 0, 0, 0.87)"
+    },
     imgField: {
         display: "none",
-        position: "relative"
-    },
-    imgName: {
-        padding: theme.spacing(5, 0, 0, 4)
     },
 
     uploadBtn: {
@@ -40,14 +39,16 @@ const formSaveUserStyle = theme => ({
     },
     addBtn: {
         background: infoColor[3],
-        "&:hover": {
-            background: infoColor[0]
+        "&:hover, &:focus": {
+            background: infoColor[0],
+            outline: "none"
         }
     },
     editBtn: {
         background: warningColor[3],
         "&:hover": {
-            background: warningColor[0]
+            background: warningColor[0],
+            outline: "none"
         }
     },
 

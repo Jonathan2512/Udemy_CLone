@@ -55,7 +55,7 @@ export default function AdminDashboard() {
             <GridContainer>
                 <GridItem xs={12} sm={6} md={3}>
                     <Card>
-                        <CardHeader color="warning" stats icon>
+                        <CardHeader hovercontent="USED SPACE" color="warning" stats icon>
                             <CardIcon color="warning">
                                 <FolderIcon />
                             </CardIcon>
@@ -78,7 +78,7 @@ export default function AdminDashboard() {
                 </GridItem>
                 <GridItem xs={12} sm={6} md={3}>
                     <Card>
-                        <CardHeader color="success" stats icon>
+                        <CardHeader hovercontent="STORE" color="success" stats icon>
                             <CardIcon color="success">
                                 <Store />
                             </CardIcon>
@@ -95,7 +95,7 @@ export default function AdminDashboard() {
                 </GridItem>
                 <GridItem xs={12} sm={6} md={3}>
                     <Card>
-                        <CardHeader color="danger" stats icon>
+                        <CardHeader hovercontent="REPORT" color="danger" stats icon>
                             <CardIcon color="danger">
                                 <ReportIcon />
                             </CardIcon>
@@ -112,7 +112,7 @@ export default function AdminDashboard() {
                 </GridItem>
                 <GridItem xs={12} sm={6} md={3}>
                     <Card>
-                        <CardHeader color="info" stats icon>
+                        <CardHeader hovercontent="Accessibility" color="info" stats icon>
                             <CardIcon color="info">
                                 <Accessibility />
                             </CardIcon>
@@ -131,7 +131,7 @@ export default function AdminDashboard() {
             <GridContainer>
                 <GridItem xs={12} sm={12} md={4}>
                     <Card chart>
-                        <CardHeader color="success">
+                        <CardHeader hovercontent="Daily Sales" color="success">
                             <ChartistGraph
                                 className="ct-chart"
                                 data={dailySalesChart.data}
@@ -158,7 +158,7 @@ export default function AdminDashboard() {
                 </GridItem>
                 <GridItem xs={12} sm={12} md={4}>
                     <Card chart>
-                        <CardHeader color="warning">
+                        <CardHeader hovercontent="Email Subcription" color="warning">
                             <ChartistGraph
                                 className="ct-chart"
                                 data={emailsSubscriptionChart.data}
@@ -181,7 +181,7 @@ export default function AdminDashboard() {
                 </GridItem>
                 <GridItem xs={12} sm={12} md={4}>
                     <Card chart>
-                        <CardHeader color="danger">
+                        <CardHeader hovercontent="Completed Tasks" color="danger">
                             <ChartistGraph
                                 className="ct-chart"
                                 data={completedTasksChart.data}
@@ -213,6 +213,7 @@ export default function AdminDashboard() {
                                 tabIcon: BugReport,
                                 tabContent: (
                                     <Tasks
+
                                         checkedIndexes={[0, 3]}
                                         tasksIndexes={[0, 1, 2, 3]}
                                         tasks={bugs}
@@ -246,11 +247,11 @@ export default function AdminDashboard() {
                 </GridItem>
                 <GridItem xs={12} sm={12} md={6}>
                     <Card>
-                        <CardHeader color="warning">
+                        <CardHeader hovercontent="Employees Stats" color="warning">
                             <h4 className={classes.cardTitleWhite}>Employees Stats</h4>
                             <p className={classes.cardCategoryWhite}>
                                 New employees on 15th September, 2016
-              </p>
+                            </p>
                         </CardHeader>
                         <CardBody>
                             <Table

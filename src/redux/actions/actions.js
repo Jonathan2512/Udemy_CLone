@@ -1,7 +1,7 @@
 import * as actionType from './../constants/actionType';
 import { callAPI } from './../../utils/CallAPI';
 import * as toastify from '../../components/Custom/toastify';
-import { file } from '@babel/types';
+
 
 export const actUserSignUp = (user, history) => {
     return () => {
@@ -54,6 +54,7 @@ export const actGetCourseList = () => {
         //     method: "GET",
         //     url: "http://elearning0706.cybersoft.edu.vn/api/QuanLyKhoaHoc/LayDanhSachKhoaHoc?MaNhom=GP09"
         // })
+
         callAPI("QuanLyKhoaHoc/LayDanhSachKhoaHoc?MaNhom=GP09", "GET", null, null)
             .then(res => {
                 let categoryList = res.data.reduce((acc, course) => {
@@ -221,11 +222,10 @@ export const actAddCourse = (course, uploadFile, history) => {
         formUpload = uploadFile;
         let data = { ...course, taiKhoanNguoiTao: admin.taiKhoan };
         let headers = { Authorization: `Bearer ${admin.accessToken}` };
-        console.log(data);
         callAPI("QuanLyKhoaHoc/ThemKhoaHoc", "POST", data, headers)
             .then(res => {
                 console.log(res);
-                toastify.SuccessNotify("Successfull !!!");
+                toastify.SuccessNotify("Add Successfully <3");
                 callAPI("QuanLyKhoaHoc/UploadHinhAnhKhoaHoc", "POST", formUpload, headers)
                     .then(res => {
                         console.log(res);
@@ -238,11 +238,12 @@ export const actAddCourse = (course, uploadFile, history) => {
                     })
             })
             .catch(err => {
-                console.log(err.response)
+                toastify.ErrNotify(err.response.data);
             })
     }
 }
 
+// check modal using for
 export const actUpdateModal = (editCourse) => {
     return dispatch => {
         let isAdd = false;
@@ -259,5 +260,51 @@ export const actUpdateModal = (editCourse) => {
             isAdd,
             isEdit
         })
+    }
+}
+
+export const actEditCourse = (course, uploadFile, history) => {
+    return () => {
+        const admin = JSON.parse(localStorage.getItem("adminLogin"));
+
+        // handle date
+        let { ngayTao } = course;
+        if (typeof (ngayTao) !== "string") {
+            let date = ngayTao.toLocaleDateString().split('/');
+            ngayTao = date[1] + '/' + date[0] + '/' + date[2];
+        }
+        else {
+            let date = ngayTao.split('/');
+            ngayTao = date[1] + '/' + date[0] + '/' + date[2]
+        }
+
+        let data = { ...course, taiKhoanNguoiTao: admin.taiKhoan, ngayTao: ngayTao };
+        let headers = {
+            Authorization: `Bearer ${admin.accessToken}`
+        }
+
+        callAPI('QuanLyKhoaHoc/CapNhatKhoaHoc', 'PUT', data, headers)
+            .then(() => {
+
+                toastify.SuccessNotify("Edit Successfully <3")
+
+                if (uploadFile.get('file') !== undefined) {
+                    let formUpload = new FormData();
+                    formUpload = uploadFile;
+                    callAPI('QuanLyKhoaHoc/UploadHinhAnhKhoaHoc', 'POST', formUpload, headers)
+                        .then(() => {
+                            setTimeout(() => {
+                                history.go();
+                            }, 1000);
+                        })
+                }
+                else {
+                    console.log('image has no change ');
+                }
+
+            })
+            .catch(err => {
+                toastify.ErrNotify(err.response.data);
+            })
     }
 }

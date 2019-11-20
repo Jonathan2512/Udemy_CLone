@@ -34,8 +34,6 @@ function CoursesManagement(props) {
         props.getCourseList();
         props.getCourseCategory();
     }, [])
-
-
     // const handleEdit = () => {
 
     // }

@@ -9,7 +9,6 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 
 // date time picketr
@@ -33,7 +32,7 @@ function FormSaveCourse(props) {
 
     const classes = useStyles();
 
-    const [selectedDate, setSelectedDate] = useState(new Date('2019-11-19T21:11:54'));
+    const [selectedDate, setSelectedDate] = useState(new Date());
 
     const [state, setState] = useState(
         {
@@ -41,29 +40,29 @@ function FormSaveCourse(props) {
             tenKhoaHoc: "",
             moTa: "",
             luotXem: 0,
-            danhGia: 0,
-            hinhAnh: "Your Upload Image",
+            danhGia: 1,
+            hinhAnh: "",
             maNhom: "GP09",
-            ngayTao: selectedDate.toString(),
+            ngayTao: selectedDate,
             maDanhMucKhoaHoc: "",
         }
     )
 
     useEffect(() => {
-        if (editCourse !== "") {
-            if (editCourse.danhMucKhoaHoc !== undefined) {
-                setState({
-                    maKhoaHoc: editCourse.maKhoaHoc,
-                    tenKhoaHoc: editCourse.tenKhoaHoc,
-                    moTa: editCourse.moTa,
-                    luotXem: editCourse.luotXem,
-                    danhGia: 1,
-                    hinhAnh: editCourse.hinhAnh,
-                    maNhom: editCourse.maNhom,
-                    ngayTao: editCourse.ngayTao,
-                    maDanhMucKhoaHoc: editCourse.danhMucKhoaHoc.maDanhMucKhoaHoc
-                })
-            }
+        if (editCourse !== "" && editCourse.danhMucKhoaHoc !== undefined) {
+            // // handle created date
+            let date = editCourse.ngayTao.split('/');
+            let handledDate = date[1] + '/' + date[0] + '/' + date[2];
+            setState({
+                maKhoaHoc: editCourse.maKhoaHoc,
+                tenKhoaHoc: editCourse.tenKhoaHoc,
+                moTa: editCourse.moTa,
+                luotXem: editCourse.luotXem,
+                hinhAnh: editCourse.hinhAnh.split("/").pop(),
+                maNhom: editCourse.maNhom,
+                ngayTao: handledDate,
+                maDanhMucKhoaHoc: editCourse.danhMucKhoaHoc.maDanhMucKhoahoc
+            })
         }
         else {
             setState({
@@ -74,18 +73,18 @@ function FormSaveCourse(props) {
                 danhGia: 0,
                 hinhAnh: "Your Upload Image",
                 maNhom: "GP09",
-                ngayTao: new Date('2019-11-19T21:11:54'),
-                maDanhMucKhoaHoc: "",
+                ngayTao: new Date(),
+                maDanhMucKhoaHoc: "BackEnd",
             })
         }
-    }, [props])
+    }, [editCourse]);
 
     // date time picker
     const handleDateChange = date => {
         setSelectedDate(date);
         setState({
             ...state,
-            ngayTao: date.toString()
+            ngayTao: date
         });
     };
 
@@ -101,16 +100,20 @@ function FormSaveCourse(props) {
     }
 
     const handleSubmit = (event) => {
-
         event.preventDefault();
+
         // upload image 
         const data = new FormData();
-
         let imageUpload = document.querySelector('input[type="file"]').files[0];
         data.append('file', imageUpload);
         data.append('tenKhoaHoc', state.tenKhoaHoc)
 
-        props.addCourse(state, data, history);
+        if (isAdd) {
+            props.CourseAdding(state, data, history);
+        }
+        if (isEdit) {
+            props.CourseEditing(state, data, history);
+        }
     }
 
     const renderCategory = () => {
@@ -172,18 +175,11 @@ function FormSaveCourse(props) {
                                     required
                                     onChange={handleOnchange} />
                             </FormControl>
-                            {/* preview */}
-                            <FormControl className={classes.formControl}>
-                                <TextField
-                                    type="text"
-                                    name="danhGia"
-                                    value={state.danhGia || ""}
-                                    label="Preview"
-                                    required
-                                    onChange={handleOnchange} />
-                            </FormControl>
                             {/* image */}
-                            <FormControl className={classes.formControl}>
+                            <FormControl className={classNames({
+                                [classes.formControl]: true,
+                                [classes.imgForm]: true
+                            })} >
                                 <TextField
                                     type="file"
                                     className={classes.imgField}
@@ -212,7 +208,6 @@ function FormSaveCourse(props) {
                                         variant="inline"
                                         format="dd/MM/yyyy"
                                         margin="normal"
-                                        id="date-picker-inline"
                                         label="Created Date"
                                         value={state.ngayTao}
                                         onChange={handleDateChange}
@@ -224,10 +219,8 @@ function FormSaveCourse(props) {
                             </FormControl>
                             {/* category */}
                             <FormControl className={classes.formControl}>
-                                <InputLabel id="select-category">Category</InputLabel>
                                 <Select
                                     labelid="demo-simple-select-label"
-                                    value={state.maDanhMucKhoaHoc || ""}
                                     id="select-category"
                                     required
                                     name="maDanhMucKhoaHoc"
@@ -255,8 +248,11 @@ function FormSaveCourse(props) {
 
 const mapDispatchToProps = dispatch => {
     return {
-        addCourse: (course, fileUpload, history) => {
+        CourseAdding: (course, fileUpload, history) => {
             dispatch(action.actAddCourse(course, fileUpload, history))
+        },
+        CourseEditing: (course, fileUpload, history) => {
+            dispatch(action.actEditCourse(course, fileUpload, history))
         }
     }
 }
