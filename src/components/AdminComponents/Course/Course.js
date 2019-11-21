@@ -55,24 +55,27 @@ function Course(props) {
                     <p className={classes.courseTitle}>{course.tenKhoaHoc}</p>
                     <p className={classes.courseContent}>{course.moTa}</p>
                 </CardBody>
-                <CardFooter style={{ justifyContent: "flex-end" }}>
-                    <Fab className={classNames({
-                        [classes.fab]: true,
-                        [classes.edit]: true
-                    })}
-                        data-toggle="modal"
-                        data-target="#formSaveCourse"
-                        onClick={() => { props.updateModal(course) }}>
-                        <EditIcon />
-                    </Fab>
-                    <Fab className={classNames({
-                        [classes.fab]: true,
-                        [classes.delete]: true
-                    })}
-                        onClick={() => handleDelete(course.maKhoaHoc)}
-                    >
-                        <DeleteIcon />
-                    </Fab>
+                <CardFooter style={{ justifyContent: "space-between" }}>
+                    <p className={classes.view}>views : {course.luotXem}</p>
+                    <div className={classes.manageBtn}>
+                        <Fab className={classNames({
+                            [classes.fab]: true,
+                            [classes.edit]: true
+                        })}
+                            data-toggle="modal"
+                            data-target="#formSaveCourse"
+                            onClick={() => { props.updateModal(course) }}>
+                            <EditIcon />
+                        </Fab>
+                        <Fab className={classNames({
+                            [classes.fab]: true,
+                            [classes.delete]: true
+                        })}
+                            onClick={() => handleDelete(course.maKhoaHoc)}
+                        >
+                            <DeleteIcon />
+                        </Fab>
+                    </div>
                 </CardFooter>
             </Card>
         </GridItem >

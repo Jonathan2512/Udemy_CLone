@@ -25,6 +25,13 @@ const courseManagementStyle = {
         color: grayColor[0],
         fontSize: "16px"
     },
+    view: {
+        textTransform: "uppercase",
+        color: "#000",
+        fontWeight: "bold",
+        marginLeft: "30px",
+        marginTop: "10px"
+    },
     fab: {
         margin: "0 10px 10px 0",
         "&:focus": {

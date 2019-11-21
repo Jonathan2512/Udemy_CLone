@@ -117,7 +117,6 @@ export const actGetUserInfo = () => {
         callAPI("QuanLyNguoiDung/ThongTinTaiKhoan", "POST", data, headers)
             .then(res => {
                 let userInfo = res.data;
-                console.log(userInfo)
                 dispatch({
                     type: actionType.GET_USER_INFO,
                     userInfo: userInfo
@@ -139,12 +138,19 @@ export const actEditUserInfo = (userEdited) => {
                 console.log(res);
                 dispatch({
                     type: actionType.EDIT_USER_INFO,
-                    userEdited: userEdited
+                    isEdit: userEdited.isEdit
                 });
             })
             .catch(err => {
                 console.log(err.response)
             })
+    }
+}
+
+export const actSendProfile = (profile) => {
+    return {
+        type: actionType.SEND_PROFILE,
+        profile
     }
 }
 
@@ -287,15 +293,15 @@ export const actEditCourse = (course, uploadFile, history) => {
             .then(() => {
 
                 toastify.SuccessNotify("Edit Successfully <3")
-
+                setTimeout(() => {
+                    history.go();
+                }, 1000);
                 if (uploadFile.get('file') !== undefined) {
                     let formUpload = new FormData();
                     formUpload = uploadFile;
                     callAPI('QuanLyKhoaHoc/UploadHinhAnhKhoaHoc', 'POST', formUpload, headers)
                         .then(() => {
-                            setTimeout(() => {
-                                history.go();
-                            }, 1000);
+                            console.log("upload file success")
                         })
                 }
                 else {

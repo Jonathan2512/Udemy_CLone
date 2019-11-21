@@ -1,132 +1,142 @@
-import React, { Fragment, Component } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import * as action from './../redux/actions/actions';
-class FormEditUser extends Component {
 
-    state = {
+
+
+function FormEditUser(props) {
+
+    let { profile } = props;
+
+    const [state, setState] = useState({
         taiKhoan: "",
         matKhau: "",
         hoTen: "",
         email: "",
         soDT: "",
-        maLoaiNguoiDung: "HV",
+        maNhom: "",
+        maLoaiNguoiDung: "",
         isEdit: false
-    };
+    })
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps && nextProps.userEdited) {
-            this.setState({
-                taiKhoan: nextProps.userEdited.taiKhoan,
-                matKhau: nextProps.userEdited.matKhau,
-                hoTen: nextProps.userEdited.hoTen,
-                email: nextProps.userEdited.email,
-                soDT: nextProps.userEdited.soDT,
-                maLoaiNguoiDung: nextProps.userEdited.maLoaiNguoiDung,
+
+    useEffect(() => {
+        if (profile !== "") {
+            setState({
+                taiKhoan: profile.taiKhoan,
+                matKhau: profile.matKhau,
+                hoTen: profile.hoTen,
+                email: profile.email,
+                soDT: profile.soDT,
+                maNhom: profile.maNhom,
+                maLoaiNguoiDung: profile.maLoaiNguoiDung,
                 isEdit: true
             })
         }
-    }
-    handleOnChange = (event) => {
+    }, [profile]);
+
+    const handleOnChange = (event) => {
         let { name, value } = event.target;
-        this.setState({
+        setState({
+            ...state,
             [name]: value
         });
     }
-    handleOnSubmit = (event) => {
+    const handleOnSubmit = (event) => {
         event.preventDefault();
-        this.props.editUserInfo(this.state);
+        props.editUserInfo(state);
     }
-    render() {
-        return (
-            <div id="formSaveUser" className="modal fade" role="dialog">
-                <div className="modal-dialog">
-                    {/* Modal content*/}
-                    <div className="modal-content">
-                        <div className="modal-body">
-                            <div className="signup-form">
-                                <form action="/examples/actions/confirmation.php" method="post" onSubmit={this.handleOnSubmit}>
-                                    <h2>Edit Your Profile</h2>
-                                    {this.state !== "" ? <Fragment>
-                                        <div className="form-group">
-                                            <label > Username :</label>
-                                            <input type="text"
-                                                disabled
-                                                className="form-control input-lg"
-                                                name="taiKhoan"
-                                                placeholder="Username"
-                                                required="required"
-                                                onChange={this.handleOnChange}
-                                                value={this.state.taiKhoan || ""}
-                                            />
-                                        </div>
-                                        <div className="form-group">
-                                            <label> Email : </label>
-                                            <input
-                                                type="email"
-                                                className="form-control input-lg"
-                                                name="email"
-                                                placeholder="Email Address"
-                                                required="required"
-                                                onChange={this.handleOnChange}
-                                                value={this.state.email || ""}
-                                            />
-                                        </div>
-                                        <div className="form-group">
-                                            <label> FullName : </label>
-                                            <input type="text"
-                                                className="form-control input-lg"
-                                                name="hoTen"
-                                                placeholder="Full Name"
-                                                required="required"
-                                                onChange={this.handleOnChange}
-                                                value={this.state.hoTen || ""} />
-                                        </div>
-                                        <div className="form-group">
-                                            <label> Phone Number</label>
-                                            <input
-                                                type="text"
-                                                className="form-control input-lg"
-                                                name="soDT"
-                                                placeholder="Phone Number"
-                                                required="required"
-                                                onChange={this.handleOnChange}
-                                                value={this.state.soDT || ""} />
-                                        </div>
-                                        <div className="form-group">
-                                            <label> Password</label>
-                                            <input
-                                                type="password"
-                                                className="form-control input-lg"
-                                                name="matKhau"
-                                                placeholder="Password"
-                                                required="required"
-                                                onChange={this.handleOnChange}
-                                                value={this.state.matKhau || ""} />
-                                        </div>
-                                    </Fragment> : ""}
+
+    return (
+        <div id="formSaveUser" className="modal animate fadeIn" role="dialog">
+            <div className="modal-dialog">
+                {/* Modal content*/}
+                <div className="modal-content">
+                    <div className="modal-body">
+                        <div className="signup-form">
+                            <form action="/examples/actions/confirmation.php" method="post" onSubmit={handleOnSubmit}>
+                                <h2>Edit Your userInfo</h2>
+                                {state !== "" ? <Fragment>
                                     <div className="form-group">
-                                        <button type="submit" className="btn btn--gradient btn-lg btn-block signup-btn">Submit</button>
+                                        <label > Username :</label>
+                                        <input type="text"
+                                            disabled
+                                            className="form-control input-lg"
+                                            name="taiKhoan"
+                                            placeholder="Username"
+                                            required="required"
+                                            onChange={handleOnChange}
+                                            value={state.taiKhoan || ""}
+                                        />
                                     </div>
-                                </form>
-                            </div>
+                                    <div className="form-group">
+                                        <label> Email : </label>
+                                        <input
+                                            type="email"
+                                            className="form-control input-lg"
+                                            name="email"
+                                            placeholder="Email Address"
+                                            required="required"
+                                            onChange={handleOnChange}
+                                            value={state.email || ""}
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label> FullName : </label>
+                                        <input type="text"
+                                            className="form-control input-lg"
+                                            name="hoTen"
+                                            placeholder="Full Name"
+                                            required="required"
+                                            onChange={handleOnChange}
+                                            value={state.hoTen || ""} />
+                                    </div>
+                                    <div className="form-group">
+                                        <label> Phone Number</label>
+                                        <input
+                                            type="text"
+                                            className="form-control input-lg"
+                                            name="soDT"
+                                            placeholder="Phone Number"
+                                            required="required"
+                                            onChange={handleOnChange}
+                                            value={state.soDT || ""} />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Password</label>
+                                        <input
+                                            type="text"
+                                            className="form-control input-lg"
+                                            name="matKhau"
+                                            placeholder="Password"
+                                            required="required"
+                                            onChange={handleOnChange}
+                                            value={state.matKhau || ""} />
+                                    </div>
+                                </Fragment> : ""}
+                                <div className="form-group">
+                                    <button type="submit" className="btn btn--gradient btn-lg btn-block signup-btn">Submit</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
-        )
-    }
+        </div>
+    )
 }
 
-const mapStateToProps = state => {
-    return {
-        userEdited: state.userReducer.userInfo,
-    }
-}
 const mapDispatchToProps = dispatch => {
     return {
         editUserInfo: (userEdited) => {
             dispatch(action.actEditUserInfo(userEdited))
         }
+    }
+}
+
+const mapStateToProps = state => {
+    return {
+        profile: state.userReducer.profile
     }
 }
 

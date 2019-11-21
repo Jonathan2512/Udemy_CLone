@@ -50,7 +50,12 @@ class UserProfile extends Component {
                                 </div>
                             </div>
                             <div className="col-md-2">
-                                <button className="btn btn--purple edit-btn" data-toggle="modal" data-target="#formSaveUser">Edit Your Profile</button>
+                                <button
+                                    className="btn btn--purple edit-btn"
+                                    data-toggle="modal"
+                                    data-target="#formSaveUser"
+                                    onClick={() => { this.props.SendProfile(userInfo) }}>
+                                    Edit Your Profile</button>
                             </div>
                         </div>
                         <div className="row profile-content">
@@ -189,6 +194,9 @@ const mapDispatchToProps = dispatch => {
     return {
         onGetUser: () => {
             dispatch(action.actGetUserInfo())
+        },
+        SendProfile: (profile) => {
+            dispatch(action.actSendProfile(profile))
         }
     }
 }

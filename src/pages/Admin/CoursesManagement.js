@@ -33,14 +33,7 @@ function CoursesManagement(props) {
     useEffect(() => {
         props.getCourseList();
         props.getCourseCategory();
-    }, [])
-    // const handleEdit = () => {
-
-    // }
-
-    // const handleAdd = () => {
-
-    // }
+    }, [props])
 
     const renderCourses = (courses) => {
         let { history } = props;
