@@ -64,7 +64,7 @@ function Course(props) {
                         })}
                             data-toggle="modal"
                             data-target="#formSaveCourse"
-                            onClick={() => { props.updateModal(course) }}>
+                            onClick={() => { props.onSaveCourse(course) }}>
                             <EditIcon />
                         </Fab>
                         <Fab className={classNames({
@@ -87,8 +87,8 @@ const mapDispatchToProps = dispatch => {
         deleteCourse: (courseID, history) => {
             dispatch(action.actDeleteCourse(courseID, history))
         },
-        updateModal: (course) => {
-            dispatch(action.actUpdateModal(course))
+        onSaveCourse: (course) => {
+            dispatch(action.actSaveCourse(course))
         }
     }
 }

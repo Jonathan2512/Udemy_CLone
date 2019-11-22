@@ -33,7 +33,7 @@ function CoursesManagement(props) {
     useEffect(() => {
         props.getCourseList();
         props.getCourseCategory();
-    }, [props])
+    }, [])
 
     const renderCourses = (courses) => {
         let { history } = props;
@@ -126,7 +126,7 @@ function CoursesManagement(props) {
             {renderCourseCategory()}
             <ScrollUpButton
                 StopPosition={0}
-                ShowAtPosition={100}
+                ShowAtPosition={50}
                 EasingType='easeOutCubic'
                 AnimationDuration={500}
                 ContainerClassName='ScrollUpButton__Container'
@@ -143,7 +143,7 @@ function CoursesManagement(props) {
             })}
                 data-toggle="modal"
                 data-target="#formSaveCourse"
-                onClick={() => { props.updateModal("") }}>
+                onClick={() => { props.onSaveCourse("") }}>
                 <AddIcon />
             </Fab>
             <FormSaveCourse history={props.history} courseCategory={props.courseCategory} />
@@ -164,8 +164,8 @@ const mapDispatchToProps = dispatch => {
         deleteCourse: (courseID, history) => {
             dispatch(action.actDeleteCourse(courseID, history))
         },
-        updateModal: (course) => {
-            dispatch(action.actUpdateModal(course))
+        onSaveCourse: (course) => {
+            dispatch(action.actSaveCourse(course))
         }
     }
 }

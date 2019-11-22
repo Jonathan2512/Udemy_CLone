@@ -2,7 +2,9 @@ import {
     infoCardHeader,
     infoColor,
     warningCardHeader,
-    warningColor
+    warningColor,
+    successCardHeader,
+    successColor
 } from './../material-dashboard-react';
 const formSaveUserStyle = theme => ({
     bodyContent: {
@@ -17,6 +19,9 @@ const formSaveUserStyle = theme => ({
     },
     addTitle: {
         ...infoCardHeader
+    },
+    addUserTitle: {
+        ...successCardHeader
     },
     edtiTitle: {
         ...warningCardHeader
@@ -41,6 +46,13 @@ const formSaveUserStyle = theme => ({
         background: infoColor[3],
         "&:hover, &:focus": {
             background: infoColor[0],
+            outline: "none"
+        }
+    },
+    addUserBtn: {
+        background: successColor[3],
+        "&:hover, &:focus": {
+            background: successColor[0],
             outline: "none"
         }
     },

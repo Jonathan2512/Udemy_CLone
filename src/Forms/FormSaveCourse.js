@@ -202,7 +202,7 @@ function FormSaveCourse(props) {
                                 [classes.saveTitle]: true,
                                 [classes.addTitle]: isAdd,
                                 [classes.edtiTitle]: isEdit
-                            })}>{editCourse ? "EDIT YOUR COURSE" : "Add New Course"} </h2>
+                            })}>{editCourse ? "EDIT YOUR COURSE" : "ADD NEW COURSE"} </h2>
                             {/* course id */}
                             <FormControl className={classes.formControl}>
                                 <TextField type="text"

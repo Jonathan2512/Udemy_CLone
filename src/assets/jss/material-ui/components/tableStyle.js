@@ -1,7 +1,7 @@
 import {
+  dangerColor,
   warningColor,
   primaryColor,
-  dangerColor,
   successColor,
   infoColor,
   roseColor,
@@ -41,17 +41,15 @@ const tableStyle = theme => ({
   },
   tableHeadCell: {
     color: "inherit",
-    ...defaultFont,
-    "&, &$tableCell": {
-      fontSize: "1em"
-    }
+    fontWeight: "bold !important",
+    fontSize: "24px !important",
   },
   tableCell: {
     ...defaultFont,
     lineHeight: "1.42857143",
     padding: "12px 8px",
     verticalAlign: "middle",
-    fontSize: "0.8125rem"
+    fontSize: "14px"
   },
   tableResponsive: {
     width: "100%",
@@ -71,7 +69,25 @@ const tableStyle = theme => ({
     display: "table-row",
     outline: "none",
     verticalAlign: "middle"
-  }
+  },
+  fab: {
+    "&:focus": {
+      outline: "none",
+    }
+  },
+  edit: {
+    margin: "0 5% 0 20%",
+    backgroundColor: warningColor[3],
+    "&:hover, &:focus": {
+      backgroundColor: warningColor[0],
+    }
+  },
+  delete: {
+    backgroundColor: dangerColor[3],
+    "&:hover, &:focus": {
+      backgroundColor: dangerColor[0],
+    }
+  },
 });
 
 export default tableStyle;

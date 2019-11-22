@@ -3,6 +3,8 @@ import { callAPI } from './../../utils/CallAPI';
 import * as toastify from '../../components/Custom/toastify';
 
 
+//  *** User Module ***
+
 export const actUserSignUp = (user, history) => {
     return () => {
         let data = { ...user, maNhom: "GP09" }
@@ -128,31 +130,6 @@ export const actGetUserInfo = () => {
     }
 }
 
-export const actEditUserInfo = (userEdited) => {
-    return (dispatch) => {
-        const user = JSON.parse(localStorage.getItem("userLogin"));
-        let data = { ...userEdited, maNhom: "GP09" };
-        let headers = { Authorization: `Bearer ${user.accessToken}` }
-        callAPI("QuanLyNguoiDung/CapNhatThongTinNguoiDung", "PUT", data, headers)
-            .then(res => {
-                console.log(res);
-                dispatch({
-                    type: actionType.EDIT_USER_INFO,
-                    isEdit: userEdited.isEdit
-                });
-            })
-            .catch(err => {
-                console.log(err.response)
-            })
-    }
-}
-
-export const actSendProfile = (profile) => {
-    return {
-        type: actionType.SEND_PROFILE,
-        profile
-    }
-}
 
 export const actFindingCourse = (keyword) => {
     return (dispatch) => {
@@ -202,7 +179,9 @@ export const actDeregisterCourse = (courseID) => {
     }
 }
 
-// admin module
+// *** Admin module ***
+
+// ** Courses Tasks**
 export const actDeleteCourse = (courseID, history) => {
     return () => {
         const admin = JSON.parse(localStorage.getItem("adminLogin"));
@@ -250,7 +229,7 @@ export const actAddCourse = (course, uploadFile, history) => {
 }
 
 // check modal using for
-export const actUpdateModal = (editCourse) => {
+export const actSaveCourse = (editCourse) => {
     return dispatch => {
         let isAdd = false;
         let isEdit = false;
@@ -261,7 +240,7 @@ export const actUpdateModal = (editCourse) => {
             isEdit = true;
         }
         dispatch({
-            type: actionType.UPDATE_MODAL,
+            type: actionType.SAVE_COURSE,
             editCourse,
             isAdd,
             isEdit
@@ -311,6 +290,94 @@ export const actEditCourse = (course, uploadFile, history) => {
             })
             .catch(err => {
                 toastify.ErrNotify(err.response.data);
+            })
+    }
+}
+
+//  ** Users Task
+export const actGetUserList = () => {
+    return dispatch => {
+        callAPI('QuanLyNguoiDung/LayDanhSachNguoiDung?MaNhom=GP09', 'GET', null, null)
+            .then(res => {
+                dispatch({
+                    type: actionType.GET_USER_LIST,
+                    userList: res.data
+                })
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+}
+
+export const actDeleteUser = (user, history) => {
+    return () => {
+        const admin = JSON.parse(localStorage.getItem('adminLogin'));
+        let taiKhoan = user.taiKhoan;
+        let headers = {
+            Authorization: `Bearer ${admin.accessToken}`
+        }
+        callAPI(`QuanLyNguoiDung/XoaNguoiDung?TaiKhoan=${taiKhoan}`, "DELETE", null, headers)
+            .then(res => {
+                toastify.WariningNotify(res.data);
+                setTimeout(() => {
+                    history.go();
+                }, 500)
+            })
+            .catch(err => {
+                toastify.ErrNotify(err.response.data)
+            })
+    }
+}
+
+// check update modal
+export const actSaveUser = (saveUser) => {
+    return dispatch => {
+        let isAdd = false;
+        let isEdit = false;
+        if (saveUser === "") isAdd = true;
+        else isEdit = true;
+        dispatch({
+            type: actionType.SAVE_USER,
+            saveUser,
+            isAdd,
+            isEdit
+        })
+    }
+}
+
+export const actAddUser = (user, history) => {
+    return () => {
+        const admin = JSON.parse(localStorage.getItem('adminLogin'));
+        let data = { ...user, maNhom: "GP09" };
+        let headers = { Authorization: `Bearer ${admin.accessToken}` }
+        callAPI('QuanLyNguoiDung/ThemNguoiDung', "POST", data, headers)
+            .then(() => {
+                toastify.SuccessNotify('Add Successfully !!!');
+                setTimeout(() => {
+                    history.go();
+                }, 500)
+            })
+            .catch(err => {
+                toastify.ErrNotify(err.response.data)
+            })
+    }
+}
+
+export const actEditUser = (userEdited, history) => {
+    return () => {
+        const user = JSON.parse(localStorage.getItem("userLogin"));
+        let data = { ...userEdited, maNhom: "GP09" };
+        let headers = { Authorization: `Bearer ${user.accessToken}` }
+        callAPI("QuanLyNguoiDung/CapNhatThongTinNguoiDung", "PUT", data, headers)
+            .then(() => {
+                toastify.SuccessNotify('Edit Successfully !!!');
+                setTimeout(() => {
+                    history.go();
+                }, 1000)
+            })
+            .catch((err) => {
+                toastify.ErrNotify(err.response.data)
             })
     }
 }

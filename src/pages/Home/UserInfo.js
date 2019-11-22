@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import * as action from '../../redux/actions/actions';
-import FormEditUser from '../../Forms/FormEditUser';
+import FormSaveUser from '../../Forms/FormSaveUser';
 import { connect } from 'react-redux';
 
 class UserProfile extends Component {
@@ -12,15 +12,9 @@ class UserProfile extends Component {
         }
     }
 
-    shouldComponentUpdate(nextProps) {
-        if (nextProps.isEdit) {
-            nextProps.history.go();
-        }
-        return true;
-    }
-
     renderUserInfo = () => {
         let { userInfo } = this.props;
+        console.log(userInfo)
         if (userInfo !== "" && localStorage.getItem("userLogin")) {
             return (
                 <div className="container mt-5">
@@ -54,7 +48,8 @@ class UserProfile extends Component {
                                     className="btn btn--purple edit-btn"
                                     data-toggle="modal"
                                     data-target="#formSaveUser"
-                                    onClick={() => { this.props.SendProfile(userInfo) }}>
+                                    onClick={() => { this.props.onSaveUser(userInfo) }}
+                                >
                                     Edit Your Profile</button>
                             </div>
                         </div>
@@ -173,7 +168,7 @@ class UserProfile extends Component {
                             </div>
                         </div>
                     </div>
-                    <FormEditUser />
+                    <FormSaveUser history={this.props.history} />
                 </div >
             )
         }
@@ -195,8 +190,8 @@ const mapDispatchToProps = dispatch => {
         onGetUser: () => {
             dispatch(action.actGetUserInfo())
         },
-        SendProfile: (profile) => {
-            dispatch(action.actSendProfile(profile))
+        onSaveUser: (user) => {
+            dispatch(action.actSaveUser(user))
         }
     }
 }
@@ -204,7 +199,6 @@ const mapDispatchToProps = dispatch => {
 const mapStateToProps = state => {
     return {
         userInfo: state.userReducer.userInfo,
-        isEdit: state.userReducer.isEdit
     }
 }
 
