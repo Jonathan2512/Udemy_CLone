@@ -9,7 +9,10 @@ let initialState = {
     courseRegistered: {},
     editCourse: {},
     isEdit: false,
-    isAdd: false
+    isAdd: false,
+    unregisterCourses: [],
+    waitingCourses: [],
+    registeredCourses: []
 }
 
 const courseReducer = (state = initialState, action) => {
@@ -24,14 +27,26 @@ const courseReducer = (state = initialState, action) => {
         case actionType.GET_COURSE_DETAIL:
             state.course = action.course;
             return { ...state };
-        case actionType.FIND_COURSE:
+        case actionType.FIND_INFO:
             state.keyword = action.keyword;
             return { ...state };
         case actionType.SAVE_COURSE:
             state.editCourse = action.editCourse;
             state.isAdd = action.isAdd;
             state.isEdit = action.isEdit;
+            return { ...state };
+        case actionType.GET_UNREGISTER_COURSE_LIST_OF_USER:
+            state.unregisterCourses = action.unregisterCourses;
+            console.log(state.unregisterCourses)
             return { ...state }
+        case actionType.GET_WAIT_ACCEPT_COURSE_LIST_OF_USER:
+            state.waitingCourses = action.waitingCourses;
+            console.log(state.waitingCourses)
+            return { ...state };
+        case actionType.GET_REGISTERED_COURSE_LIST_OF_USER:
+            state.registeredCourses = action.registeredCourses;
+            console.log(state.registeredCourses)
+            return { ...state };
         default:
             return { ...state }
     }

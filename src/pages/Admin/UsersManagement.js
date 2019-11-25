@@ -2,14 +2,14 @@ import React, { useEffect, Fragment } from 'react';
 import { connect } from 'react-redux';
 import * as action from './../../redux/actions/actions';
 import { CircleArrow as ScrollUpButton } from 'react-scroll-up-button';
-import classNames from 'classnames'
+import classNames from 'classnames';
 
 // @material-ui/core
 import { makeStyles } from "@material-ui/core/styles";
 import Fab from '@material-ui/core/Fab';
 
 // @material-ui/icon 
-import AddIcon from '@material-ui/icons/Add'
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
 // core components
 import GridContainer from './../../components/AdminComponents/Grid/GridContainer';
@@ -28,7 +28,7 @@ const useStyles = makeStyles(styles);
 
 function UsersManagement(props) {
 
-    let { userList, history } = props;
+    let { userList, history, findingUserList, findingName } = props;
 
     const classes = useStyles();
 
@@ -46,7 +46,22 @@ function UsersManagement(props) {
                 tableHeaderColor="success"
                 tableHead={["ID", "Account", "Name", "Email", "Phone", "Type"]}
                 tableData={userList}
-                history={history} />
+                history={history}
+                rowsOnPage={20} />
+        }
+    }
+
+    const renderFindingUser = () => {
+        if (findingUserList !== [] && findingUserList.length > 0) {
+            findingUserList = findingUserList.map((item, index) => {
+                return { ...item, key: index }
+            })
+            return <Table
+                tableHeaderColor="warning"
+                tableHead={["ID", "Account", "Name", "EMAIL", "PHONE", "TYPE", "Password"]}
+                tableData={findingUserList}
+                history={history}
+            />
         }
     }
 
@@ -54,14 +69,23 @@ function UsersManagement(props) {
         <Fragment>
             <GridContainer>
                 <GridItem xs={12} sm={12} md={12}>
-                    <Card>
-                        <CardHeader hovercontent="Users List" color="success">
-                            <h2 className={classes.title}>Users List (GP09)</h2>
-                        </CardHeader>
-                        <CardBody>
-                            {renderTable()}
-                        </CardBody>
-                    </Card>
+                    {((findingUserList && findingUserList.length < 1) || findingName === "")
+                        ? <Card>
+                            <CardHeader hovercontent="Users List" color="success">
+                                <h2 className={classes.title}>Users List (GP09)</h2>
+                            </CardHeader>
+                            <CardBody>
+                                {renderTable()}
+                            </CardBody>
+                        </Card>
+                        : <Card>
+                            <CardHeader hovercontent="Finding Result" color="warning">
+                                <h2 className={classes.title}>Finding Result: </h2>
+                            </CardHeader>
+                            <CardBody>
+                                {renderFindingUser()}
+                            </CardBody>
+                        </Card>}
                 </GridItem>
             </GridContainer>
             <ScrollUpButton
@@ -84,7 +108,7 @@ function UsersManagement(props) {
                 data-toggle="modal"
                 data-target="#formSaveUser"
                 onClick={() => { props.onAddUser("") }}>
-                <AddIcon />
+                <PersonAddIcon />
             </Fab>
             <ToastContainer />
             <FormSaveUser history={props.history} />
@@ -106,7 +130,9 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
     return {
-        userList: state.userReducer.userList
+        userList: state.userReducer.userList,
+        findingUserList: state.userReducer.findingUserList,
+        findingName: state.userReducer.findingName
     }
 }
 

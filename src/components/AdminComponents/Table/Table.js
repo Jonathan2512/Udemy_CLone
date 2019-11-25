@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import classNames from 'classnames';
 import { connect } from 'react-redux';
 import * as action from './../../../redux/actions/actions';
-
+import { NavLink } from 'react-router-dom';
 
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
@@ -15,11 +15,15 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import Fab from "@material-ui/core/Fab";
 
+
 // material ui icon
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
+import RemoveIcon from '@material-ui/icons/Remove';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
 // core components
 import styles from "./../../../assets/jss/material-ui/components/tableStyle.js";
+import { Button } from "@material-ui/core";
 
 const useStyles = makeStyles(styles);
 
@@ -27,12 +31,11 @@ function CustomTable(props) {
 
   const classes = useStyles();
   const { tableHead, tableHeaderColor } = props;
-  let { tableData, history } = props;
 
+  let { tableData, history, rowsOnPage, listType, courseID } = props;
 
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(20);
-
+  const [rowsPerPage, setRowsPerPage] = useState(rowsOnPage);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -43,34 +46,117 @@ function CustomTable(props) {
     setPage(0);
   };
 
-  const renderTrow = (user) => {
-    return (
-      <TableRow key={user.key} className={classes.tableBodyRow}>
-        <TableCell className={classes.tableCell}>{user.key + 1}</TableCell>
-        <TableCell className={classes.tableCell}>{user.taiKhoan} </TableCell>
-        <TableCell className={classes.tableCell}>{user.hoTen} </TableCell>
-        <TableCell className={classes.tableCell}>{user.email} </TableCell>
-        <TableCell className={classes.tableCell}>{user.soDt} </TableCell>
-        <TableCell className={classes.tableCell}>{user.maLoaiNguoiDung}</TableCell>
-        <TableCell className={classes.tableCell}>
+
+  const renderRegiserButtons = (user) => {
+    switch (listType) {
+      case "Registered":
+        return <TableCell className={classes.tableCell}>
           <Fab className={classNames({
             [classes.fab]: true,
-            [classes.edit]: true
+            [classes.delete]: true
           })}
-            data-toggle="modal"
-            data-target="#formSaveUser"
-            onClick={() => { props.onEditUser(user) }}>
-            <EditIcon />
+            onClick={() => {
+              props.onDeregisterUser(courseID, user.taiKhoan);
+            }}>
+            <RemoveIcon />
+          </Fab>
+        </TableCell>;
+      case "Waiting Accept":
+        return <TableCell className={classes.tableCell}>
+          <Fab className={classNames({
+            [classes.fab]: true,
+            [classes.add]: true
+          })}
+            onClick={() => {
+              props.onRegisterUser(courseID, user.taiKhoan);
+            }}>
+            <PersonAddIcon />
           </Fab>
           <Fab className={classNames({
             [classes.fab]: true,
             [classes.delete]: true
           })}
-            onClick={() => { props.OnDeleteUser(user, history) }}>
-            <DeleteIcon />
+            onClick={() => {
+              props.onDeregisterUser(courseID, user.taiKhoan);
+            }}>
+            <RemoveIcon />
           </Fab>
-        </TableCell>
-      </TableRow>
+        </TableCell>;
+      case "Unregister":
+        return <TableCell className={classes.tableCell}>
+          <Fab className={classNames({
+            [classes.fab]: true,
+            [classes.add]: true
+          })}
+            onClick={() => {
+              props.onRegisterUser(courseID, user.taiKhoan);
+            }}>
+            <PersonAddIcon />
+          </Fab>
+        </TableCell>;
+      default:
+        return null;
+    }
+  }
+
+  const renderTrow = (user) => {
+    return (
+      <TableRow key={user.key} className={classes.tableBodyRow}>
+        {user.key !== undefined
+          ? <TableCell className={classes.tableCell}>{user.key + 1}</TableCell>
+          : null}
+        {user.taiKhoan !== undefined
+          ? <TableCell className={classes.tableCell}>
+            <NavLink className={classes.linkAcc} to='/admin/course-register'>
+              <Button onClick={() => { props.onSaveUser(user) }}>
+                {user.taiKhoan}
+              </Button>
+            </NavLink>
+          </TableCell>
+          : null}
+        {user.hoTen !== undefined
+          ? <TableCell className={classes.tableCell}>{user.hoTen} </TableCell>
+          : null}
+        {user.biDanh !== undefined
+          ? <TableCell className={classes.tableCell}>{user.biDanh}</TableCell>
+          : null}
+        {user.email !== undefined
+          ? <TableCell className={classes.tableCell + " email"}>{user.email} </TableCell>
+          : null}
+        {user.soDt !== undefined
+          ? <TableCell className={classes.tableCell + " soDt"}>{user.soDt} </TableCell>
+          : null}
+        {/* type of user */}
+        {user.maLoaiNguoiDung !== undefined
+          ? <TableCell className={classes.tableCell + " maLoai"}>{user.maLoaiNguoiDung}</TableCell>
+          : null}
+        {/* password */}
+        {user.matKhau !== undefined
+          ? <TableCell className={classes.tableCell + " matKhau"}
+          >{user.matKhau}</TableCell> : null}
+        {/* manage button */}
+        {user.biDanh === undefined
+          ? <TableCell>
+            <Fab className={classNames({
+              [classes.fab]: true,
+              [classes.edit]: true
+            })}
+              data-toggle="modal"
+              data-target="#formSaveUser"
+              onClick={() => { props.onSaveUser(user) }}>
+              <EditIcon />
+            </Fab>
+            <Fab className={classNames({
+              [classes.fab]: true,
+              [classes.delete]: true
+            })}
+              onClick={() => { props.OnDeleteUser(user, history) }}>
+              <DeleteIcon />
+            </Fab>
+          </TableCell>
+          : null}
+        {renderRegiserButtons(user)}
+      </TableRow >
     )
   }
 
@@ -104,7 +190,7 @@ function CustomTable(props) {
         </TableBody>
       </Table>
       <TablePagination
-        rowsPerPageOptions={[20, 60, 100]}
+        rowsPerPageOptions={[5, 10, 20]}
         component="div"
         count={tableData.length}
         rowsPerPage={rowsPerPage}
@@ -144,8 +230,14 @@ const mapDispatchToProps = dispatch => {
     OnDeleteUser: (user, history) => {
       dispatch(action.actDeleteUser(user, history))
     },
-    onEditUser: (user) => {
+    onSaveUser: (user) => {
       dispatch(action.actSaveUser(user))
+    },
+    onRegisterUser: (courseID, userAccount) => {
+      dispatch(action.actRegiterUser(courseID, userAccount))
+    },
+    onDeregisterUser: (courseID, userAccount) => {
+      dispatch(action.actDeregisterUser(courseID, userAccount))
     }
   }
 }

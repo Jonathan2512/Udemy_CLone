@@ -1,18 +1,24 @@
+// home routes
 import Home from './pages/Home/Home';
 import CourseListPage from './pages/Home/CourseListPage';
 import CourseDetail from './pages/Home/CourseDetail';
 import UserProfile from './pages/Home/UserInfo';
 import RegisterCourse from './pages/Home/RegisterCourse';
+
+// admin routes
 import AdminDashboard from './pages/Admin/AdminDashboard'
 import UsersManagement from './pages/Admin/UsersManagement';
 import CoursesManagement from './pages/Admin/CoursesManagement';
-import AdvancedRegister from './pages/Admin/AdvancedRegister';
+import AdvancedRegisterCourse from './pages/Admin/UserRegister';
+import CourseRegister from './pages/Admin/CourseRegister';
 
 
+// @material-ui icon
 import Dashboard from "@material-ui/icons/Dashboard";
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
 const homeRoutes = [
     {
@@ -70,11 +76,18 @@ const adminRoutes = [
         component: UsersManagement
     },
     {
-        path: '/admin/advanced-register',
+        path: '/admin/user-register',
         exact: false,
-        name: "Advanced Register",
+        name: "User Register",
+        icon: PersonAddIcon,
+        component: AdvancedRegisterCourse
+    },
+    {
+        path: '/admin/course-register',
+        exact: false,
+        name: "Course Register",
         icon: ShoppingCartIcon,
-        component: AdvancedRegister
+        component: CourseRegister
     }
 ]
 export { homeRoutes, adminRoutes };

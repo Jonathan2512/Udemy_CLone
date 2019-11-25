@@ -208,7 +208,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         OnSearch: (keyword) => {
-            dispatch(action.actFindingCourse(keyword))
+            dispatch(action.actFindingInfo(keyword))
         },
         getCourseList: () => {
             dispatch(action.actGetCourseList())

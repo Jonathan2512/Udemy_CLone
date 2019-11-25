@@ -27,7 +27,7 @@ import Button from '@material-ui/core/Button';
 // @material-ui/icons components
 import Search from '@material-ui/icons/Search';
 import MailIcon from "@material-ui/icons/Mail";
-import NotificationsIcon from '@material-ui/icons/Notifications';
+import HomeIcon from '@material-ui/icons/Home';
 import MenuIcon from "@material-ui/icons/Menu";
 import MoreIcon from '@material-ui/icons/MoreVert';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -47,6 +47,7 @@ const AdminLayout = props => {
 
     const [drawerMobilOpen, setDrawerMobilOpen] = useState(false);
     const [sectionMobilOpen, setSectionMobilOpen] = useState(false);
+    const [keyword, setKeyWord] = useState('');
 
     const handleDrawerToggle = () => {
         setDrawerMobilOpen(!drawerMobilOpen);
@@ -129,31 +130,40 @@ const AdminLayout = props => {
                 <p className="mb-0">Messages</p>
             </MenuItem>
             <MenuItem>
-                <IconButton aria-label="show 11 new notifications" color="inherit">
-                    <Badge badgeContent={0} color="secondary">
-                        <NotificationsIcon />
-                    </Badge>
-                </IconButton>
-                <p className="mb-0">Notifications</p>
+                <NavLink to='/user-profile'>
+                    <IconButton
+                        aria-label="account of current user"
+                        aria-controls="primary-search-account-menu"
+                        aria-haspopup="true"
+                        color="inherit"
+                    >
+                        <AccountCircle />
+                    </IconButton>
+                    <p className="mb-0">Profile</p>
+                </NavLink>
             </MenuItem>
-            <MenuItem >
-                <IconButton
-                    aria-label="account of current user"
-                    aria-controls="primary-search-account-menu"
-                    aria-haspopup="true"
-                    color="inherit"
-                >
-                    <AccountCircle />
-                </IconButton>
-                <p className="mb-0">Profile</p>
+            <MenuItem>
+                <NavLink to='/home'>
+                    <IconButton
+                        aria-label="show 11 new notifications" color="inherit">
+                        <Badge badgeContent={0} color="secondary">
+                            <HomeIcon />
+                        </Badge>
+                    </IconButton>
+                    <p className="mb-0" >Home</p>
+                </NavLink>
             </MenuItem>
-        </Menu>
+        </Menu >
     );
 
-    const hanldeSearch = (keyword) => {
+    const hanldeOnKeyUp = (keyword) => {
         props.routes.OnKeyUp(keyword);
+        setKeyWord(keyword);
     }
 
+    const handleOnSearch = () => {
+        props.routes.OnSearch(keyword);
+    }
     return (
         <div className={classes.root}>
             {/* appbar */}
@@ -182,9 +192,12 @@ const AdminLayout = props => {
                                 input: classes.inputInput,
                             }}
                             inputProps={{ 'aria-label': 'search' }}
-                            onChange={event => { hanldeSearch(event.target.value) }}
+                            onChange={event => { hanldeOnKeyUp(event.target.value) }}
                         />
-                        <Button aria-label="edit" className={classes.searchIcon}>
+                        <Button
+                            aria-label="search-button"
+                            className={classes.searchIcon}
+                            onClick={handleOnSearch}>
                             <Search />
                         </Button>
                     </div>
@@ -194,26 +207,31 @@ const AdminLayout = props => {
                             className={classes.iconButton}
                             aria-label="show 4 new mails"
                             color="inherit">
-                            <Badge badgeContent={0} color="secondary">
+                            <Badge badgeContent={0} aria-label="mail" color="secondary">
                                 <MailIcon />
                             </Badge>
                         </IconButton>
-                        <IconButton
-                            className={classes.iconButton} aria-label="show 17 new notifications" color="inherit">
-                            <Badge badgeContent={0} color="secondary">
-                                <NotificationsIcon />
-                            </Badge>
-                        </IconButton>
-                        <IconButton
-                            className={classes.iconButton}
-                            edge="end"
-                            aria-label="account of current user"
-                            aria-haspopup="true"
-
-                            color="inherit"
-                        >
-                            <AccountCircle />
-                        </IconButton>
+                        <NavLink to='/user-profile'>
+                            <IconButton
+                                className={classes.iconButton}
+                                aria-label="account of current user"
+                                color="inherit">
+                                <Badge badgeContent={0} color="secondary">
+                                    <AccountCircle />
+                                </Badge>
+                            </IconButton>
+                        </NavLink>
+                        <NavLink to='/home'>
+                            <IconButton
+                                className={classes.iconButton}
+                                edge="end"
+                                aria-label="view your home page"
+                                aria-haspopup="true"
+                                color="inherit"
+                            >
+                                <HomeIcon />
+                            </IconButton>
+                        </NavLink>
                     </div>
                     {/* mobile section */}
                     <div className={classes.sectionMobile}>
@@ -313,10 +331,18 @@ function AdminTemplate({ Component, ...props }) {
 const mapDispatchToProps = dispatch => {
     return {
         OnKeyUp: keyword => {
-            dispatch(action.actFindingCourse(keyword))
+            dispatch(action.actFindingInfo(keyword))
+        },
+        OnSearch: keyword => {
+            dispatch(action.actGetFindingUserProfile(keyword))
         }
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        findingUserList: state.userReducer.findingUserList
+    }
+}
 
-export default connect(null, mapDispatchToProps)(AdminTemplate);
+export default connect(mapStateToProps, mapDispatchToProps)(AdminTemplate);

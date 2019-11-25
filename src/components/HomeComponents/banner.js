@@ -42,7 +42,7 @@ class Banner extends Component {
 const mapDispatchToProps = dispatch => {
     return {
         OnSearch: (keyword) => {
-            dispatch(action.actFindingCourse(keyword))
+            dispatch(action.actFindingInfo(keyword))
         }
     }
 }

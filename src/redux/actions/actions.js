@@ -130,11 +130,10 @@ export const actGetUserInfo = () => {
     }
 }
 
-
-export const actFindingCourse = (keyword) => {
+export const actFindingInfo = (keyword) => {
     return (dispatch) => {
         dispatch({
-            type: actionType.FIND_COURSE,
+            type: actionType.FIND_INFO,
             keyword: keyword
         })
     }
@@ -148,7 +147,7 @@ export const actRegisterCourse = (course) => {
             Authorization: `Bearer ${user.accessToken}`
         }
         callAPI("QuanLyKhoaHoc/DangKyKhoaHoc", "POST", data, headers)
-            .then(res => {
+            .then(() => {
                 setTimeout(() => {
                     localStorage.setItem(`${course.maKhoaHoc}`, JSON.stringify(course));
                 }, 1000)
@@ -378,6 +377,183 @@ export const actEditUser = (userEdited, history) => {
             })
             .catch((err) => {
                 toastify.ErrNotify(err.response.data)
+            })
+    }
+}
+
+export const actGetFindingUserProfile = (findingName) => {
+    return (dispatch) => {
+        const admin = JSON.parse(localStorage.getItem('adminLogin'));
+        let headers = { Authorization: `Bearer ${admin.accessToken}` };
+        callAPI(`QuanLyNguoiDung/TimKiemNguoiDung?MaNhom=GP09&tuKhoa=${findingName}`, "GET", null, headers)
+            .then(res => {
+                if (res.data !== [] && res.data.length > 0) {
+                    dispatch({
+                        type: actionType.GET_FINDING_USER_LIST,
+                        findingUserList: res.data
+                    })
+                }
+                else toastify.ErrNotify('No Any User Found !!!')
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+}
+
+
+// *** advanced register ***
+
+//  ** register user by course.
+
+// get unregister user list 
+export const actGetUnregisterUsers = (courseID) => {
+    return (dispatch) => {
+        const admin = JSON.parse(localStorage.getItem('adminLogin'));
+        let data = { maKhoaHoc: courseID }
+        let headers = { Authorization: `Bearer ${admin.accessToken}` };
+        callAPI('QuanLyNguoiDung/LayDanhSachNguoiDungChuaGhiDanh', 'POST', data, headers)
+            .then(res => {
+                dispatch({
+                    type: actionType.GET_UNREGISTER_USER_LIST_OF_COURSE,
+                    unRegisterList: res.data,
+                })
+            })
+            .catch(err => {
+                console.log(err.response)
+            })
+    }
+}
+
+// get waiting accepted user list
+export const actGetWaitingUsers = (courseID) => {
+    return (dispatch) => {
+        const admin = JSON.parse(localStorage.getItem('adminLogin'));
+        let data = { maKhoaHoc: courseID }
+        let headers = { Authorization: `Bearer ${admin.accessToken}` };
+        callAPI('QuanLyNguoiDung/LayDanhSachHocVienChoXetDuyet', 'POST', data, headers)
+            .then(res => {
+                dispatch({
+                    type: actionType.GET_WAIT_ACCEPT_USER_LIST_OF_COURSE,
+                    waitingList: res.data
+                })
+            })
+            .catch(err => {
+                console.log(err.response)
+            })
+    }
+}
+
+// get registered user list
+export const actGetRegisteredUsers = (courseID) => {
+    return (dispatch) => {
+        const admin = JSON.parse(localStorage.getItem('adminLogin'));
+        let data = { maKhoaHoc: courseID }
+        let headers = { Authorization: `Bearer ${admin.accessToken}` };
+        callAPI('QuanLyNguoiDung/LayDanhSachHocVienKhoaHoc', 'POST', data, headers)
+            .then(res => {
+                dispatch({
+                    type: actionType.GET_REGISTERED_USER_LIST_OF_COURSE,
+                    registeredList: res.data
+                })
+            })
+            .catch(err => {
+                console.log(err.response)
+            })
+    }
+}
+
+// register user
+export const actRegiterUser = (courseID, userAccount) => {
+    return () => {
+        const admin = JSON.parse(localStorage.getItem('adminLogin'));
+        let data = { maKhoaHoc: courseID, taiKhoan: userAccount };
+        let headers = { Authorization: `Bearer ${admin.accessToken}` };
+        callAPI('QuanLyKhoaHoc/GhiDanhKhoaHoc', 'POST', data, headers)
+            .then(res => {
+                toastify.SuccessNotify(res.data);
+                localStorage.setItem(`${courseID}`, "this course");
+            })
+            .catch(err => {
+                console.log(err.response);
+            })
+    }
+}
+
+// deregister user
+export const actDeregisterUser = (courseID, userAccount) => {
+    return () => {
+        const admin = JSON.parse(localStorage.getItem('adminLogin'));
+        let data = { maKhoaHoc: courseID, taiKhoan: userAccount };
+        let headers = { Authorization: `Bearer ${admin.accessToken}` };
+        callAPI('QuanLyKhoaHoc/HuyGhiDanh', 'POST', data, headers)
+            .then(res => {
+                toastify.SuccessNotify(res.data);
+                localStorage.removeItem(`${courseID}`);
+            })
+            .catch(err => {
+                console.log(err.response);
+            })
+    }
+}
+
+// get unregister course list 
+export const actGetUnregisterCourses = (account) => {
+    return (dispacth) => {
+        const admin = JSON.parse(localStorage.getItem('adminLogin'));
+        let data = { TaiKhoan: account };
+        let headers = {
+            Authorization: `Bearer ${admin.accessToken}`
+        };
+        callAPI('QuanLyNguoiDung/LayDanhSachKhoaHocChuaGhiDanh', 'POST', data, headers)
+            .then(res => {
+                dispacth({
+                    type: actionType.GET_UNREGISTER_COURSE_LIST_OF_USER,
+                    unregisterCourses: res.data
+                })
+            })
+            .catch(err => {
+                console.log(err.response)
+            })
+    }
+}
+// get unregister course list 
+export const actGetWaitingCourses = (account) => {
+    return (dispacth) => {
+        const admin = JSON.parse(localStorage.getItem('adminLogin'));
+        let data = { TaiKhoan: account };
+        let headers = {
+            Authorization: `Bearer ${admin.accessToken}`
+        };
+        callAPI('QuanLyNguoiDung/LayDanhSachKhoaHocChoXetDuyet', 'POST', data, headers)
+            .then(res => {
+                dispacth({
+                    type: actionType.GET_WAIT_ACCEPT_COURSE_LIST_OF_USER,
+                    waitingCourses: res.data
+                })
+            })
+            .catch(err => {
+                console.log(err.response)
+            })
+    }
+}
+// get unregister course list 
+export const actGetRegisteredCourses = (account) => {
+    return (dispacth) => {
+        const admin = JSON.parse(localStorage.getItem('adminLogin'));
+        let data = { TaiKhoan: account };
+        let headers = {
+            Authorization: `Bearer ${admin.accessToken}`
+        };
+        callAPI('QuanLyNguoiDung/LayDanhSachKhoaHocDaXetDuyet', 'POST', data, headers)
+            .then(res => {
+                dispacth({
+                    type: actionType.GET_REGISTERED_COURSE_LIST_OF_USER,
+                    registeredCourses: res.data
+                })
+            })
+            .catch(err => {
+                console.log(err.response)
             })
     }
 }

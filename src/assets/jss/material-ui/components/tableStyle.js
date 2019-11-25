@@ -70,9 +70,22 @@ const tableStyle = theme => ({
     outline: "none",
     verticalAlign: "middle"
   },
+  linkAcc: {
+    color: '#000',
+    "&:hover, &:focus": {
+      textDecoration: "none"
+    }
+  },
   fab: {
     "&:focus": {
       outline: "none",
+    }
+  },
+  add: {
+    margin: "0 5% 0 20%",
+    backgroundColor: successColor[3],
+    "&:hover, &:focus": {
+      backgroundColor: successColor[0],
     }
   },
   edit: {

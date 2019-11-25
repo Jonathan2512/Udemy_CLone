@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import * as action from '../redux/actions/actions';
 import classNames from 'classnames';
@@ -61,7 +61,7 @@ function FormSaveUser(props) {
                 matKhau: profile.matKhau,
                 hoTen: profile.hoTen,
                 email: profile.email,
-                soDT: profile.soDT,
+                soDT: profile.soDT || profile.soDt,
                 maLoaiNguoiDung: profile.maLoaiNguoiDung,
             })
         }
@@ -91,17 +91,24 @@ function FormSaveUser(props) {
 
         switch (name) {
             case "taiKhoan":
-                break;
-            case "matKhau":
+                if (value !== "" && !value.match(/^([a-z0-9_-]{3,16})$/i)) {
+                    message = "Usename can't contain special character !"
+                }
                 break;
             case "hoTen":
+                if (value !== "" && value.length < 4) {
+                    message = "Fullname is at least 4 character !"
+                }
                 break;
             case "email":
-                // if (value !== "" && !value.match(/^[0-9]/i)) {
-                //     message = "View must be number !"
-                // }
+                if (value !== "" && !value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)) {
+                    message = "Email is informat !"
+                }
                 break;
             case "soDT":
+                if (value !== "" && !value.match(/^[a-z]$/i)) {
+                    message = "Must be number !"
+                }
                 break;
             case "matKhau":
                 break;
