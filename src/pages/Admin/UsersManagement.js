@@ -98,7 +98,8 @@ function UsersManagement(props) {
                 style={{
                     fill: "#f44336",
                     border: "2px solid #f44336",
-                    outline: "none"
+                    outline: "none",
+                    zIndex: 1000
                 }}
             />
             <Fab className={classNames({

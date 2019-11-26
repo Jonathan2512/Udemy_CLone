@@ -37,15 +37,12 @@ const courseReducer = (state = initialState, action) => {
             return { ...state };
         case actionType.GET_UNREGISTER_COURSE_LIST_OF_USER:
             state.unregisterCourses = action.unregisterCourses;
-            console.log(state.unregisterCourses)
             return { ...state }
         case actionType.GET_WAIT_ACCEPT_COURSE_LIST_OF_USER:
             state.waitingCourses = action.waitingCourses;
-            console.log(state.waitingCourses)
             return { ...state };
         case actionType.GET_REGISTERED_COURSE_LIST_OF_USER:
             state.registeredCourses = action.registeredCourses;
-            console.log(state.registeredCourses)
             return { ...state };
         default:
             return { ...state }

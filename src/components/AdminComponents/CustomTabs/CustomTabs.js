@@ -30,7 +30,7 @@ export default function CustomTabs(props) {
   });
   return (
     <Card plain={plainTabs}>
-      <CardHeader color={headerColor} plain={plainTabs}>
+      <CardHeader hovercontent="Custom Tasks" color={headerColor} plain={plainTabs}>
         {title !== undefined ? <div className={cardTitle}>{title}</div> : null}
         <Tabs
           value={value}

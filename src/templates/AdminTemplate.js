@@ -221,7 +221,7 @@ const AdminLayout = props => {
                                 </Badge>
                             </IconButton>
                         </NavLink>
-                        <NavLink to='/home'>
+                        <NavLink to='/'>
                             <IconButton
                                 className={classes.iconButton}
                                 edge="end"

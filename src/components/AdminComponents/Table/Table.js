@@ -49,7 +49,7 @@ function CustomTable(props) {
 
   const renderRegiserButtons = (user) => {
     switch (listType) {
-      case "Registered":
+      case "Registered Users":
         return <TableCell className={classes.tableCell}>
           <Fab className={classNames({
             [classes.fab]: true,
@@ -61,7 +61,7 @@ function CustomTable(props) {
             <RemoveIcon />
           </Fab>
         </TableCell>;
-      case "Waiting Accept":
+      case "Waiting Accept Users":
         return <TableCell className={classes.tableCell}>
           <Fab className={classNames({
             [classes.fab]: true,
@@ -82,7 +82,7 @@ function CustomTable(props) {
             <RemoveIcon />
           </Fab>
         </TableCell>;
-      case "Unregister":
+      case "Unregister Users":
         return <TableCell className={classes.tableCell}>
           <Fab className={classNames({
             [classes.fab]: true,

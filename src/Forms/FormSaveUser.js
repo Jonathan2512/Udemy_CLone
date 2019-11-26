@@ -106,9 +106,6 @@ function FormSaveUser(props) {
                 }
                 break;
             case "soDT":
-                if (value !== "" && !value.match(/^[a-z]$/i)) {
-                    message = "Must be number !"
-                }
                 break;
             case "matKhau":
                 break;

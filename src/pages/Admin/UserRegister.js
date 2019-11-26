@@ -3,11 +3,12 @@ import { connect } from 'react-redux';
 import * as action from '../../redux/actions/actions';
 import { CircleArrow as ScrollUpButton } from 'react-scroll-up-button';
 import { NavLink } from 'react-router-dom';
-// import { CircleArrow as ScrollUpButton } from 'react-scroll-up-button';
+
 
 // // @material-ui/cores
 import { makeStyles } from "@material-ui/core/styles";
-// import { Fab } from '@material-ui/core';
+import { Button } from '@material-ui/core';
+
 
 import StarIcon from '@material-ui/icons/Star';
 import StarHalfIcon from '@material-ui/icons/StarHalf';
@@ -18,12 +19,11 @@ import GridContainer from '../../components/AdminComponents/Grid/GridContainer';
 import GridItem from '../../components/AdminComponents/Grid/GridItem';
 import CardHeader from '../../components/AdminComponents/Card/CardHeader';
 import Card from '../../components/AdminComponents/Card/Card';
-import { Button } from '@material-ui/core';
+
 import CardBody from '../../components/AdminComponents/Card/CardBody';
 import Table from '../../components/AdminComponents/Table/Table';
 
 import styles from '../../assets/jss/material-ui/views/advancedRegister';
-import FormSaveUser from '../../Forms/FormSaveUser';
 import { ToastContainer } from 'react-toastify';
 
 const useStyles = makeStyles(styles);
@@ -146,15 +146,14 @@ function AdvancedRegisterCourse(props) {
                     </Card>
                 </GridItem>
                 {/* {currentCourse.registeredUsers && currentCourse.registeredUsers.length > 0 ? */}
-                {renderTableList(currentCourse.registeredUsers, "success", "Registered")}
+                {renderTableList(currentCourse.registeredUsers, "success", "Registered Users")}
                 {/* : ""} */}
                 {/* {currentCourse.waitingUsers && currentCourse.waitingUsers.length > 0 ?*/}
-                {renderTableList(currentCourse.waitingUsers, "warning", "Waiting Accept")}
+                {renderTableList(currentCourse.waitingUsers, "warning", "Waiting Accept Users")}
                 {/* : ""}; */}
                 {/* {currentCourse.unregisterUsers && currentCourse.unregisterUsers.length > 0 ? */}
-                {renderTableList(currentCourse.unregisterUsers, "danger", "Unregister")}
+                {renderTableList(currentCourse.unregisterUsers, "danger", "Unregister Users")}
                 {/* : ""}; */}
-                <FormSaveUser />
                 <ScrollUpButton
                     StopPosition={0}
                     ShowAtPosition={50}
@@ -165,7 +164,8 @@ function AdvancedRegisterCourse(props) {
                     style={{
                         fill: "#f44336",
                         border: "2px solid #f44336",
-                        outline: "none"
+                        outline: "none",
+                        zIndex: 1000
                     }}
                 />
                 <ToastContainer />
@@ -177,11 +177,11 @@ function AdvancedRegisterCourse(props) {
             <p>
                 Direction :
                 <Button variant="contained" color="secondary" style={{ margin: '0 10px' }}>
-                    <NavLink style={{ color: '#fff' }} to='/admin/courses-management'>
-                        Back To Course management
+                    <NavLink className={classes.btnLink} to='/admin/courses-management'>
+                        Back To Courses management
                     </NavLink>
                 </Button>
-                and click view to choose a course you wanna manage the user register list .
+                and click Views to choose a course you wanna manage The Register User List .
             </p>
         </div>
     )

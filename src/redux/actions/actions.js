@@ -28,7 +28,7 @@ export const actUserLogin = (user, history) => {
             .then(res => {
                 // user sign in successfully.
                 localStorage.setItem("userLogin", JSON.stringify(res.data));
-                toastify.SuccessNotify("Signin Successfull !!!");
+                toastify.SuccessNotify("Sign In Successfull !!!");
 
                 // if user is GV => access to dashboard permitted and direct to dashboard
                 if (res.data.maLoaiNguoiDung === "GV") {
@@ -329,7 +329,7 @@ export const actDeleteUser = (user, history) => {
     }
 }
 
-// check update modal
+// *check update modal
 export const actSaveUser = (saveUser) => {
     return dispatch => {
         let isAdd = false;
@@ -406,7 +406,7 @@ export const actGetFindingUserProfile = (findingName) => {
 
 //  ** register user by course.
 
-// get unregister user list 
+// *get unregister user list 
 export const actGetUnregisterUsers = (courseID) => {
     return (dispatch) => {
         const admin = JSON.parse(localStorage.getItem('adminLogin'));
@@ -425,7 +425,7 @@ export const actGetUnregisterUsers = (courseID) => {
     }
 }
 
-// get waiting accepted user list
+// *get waiting accepted user list
 export const actGetWaitingUsers = (courseID) => {
     return (dispatch) => {
         const admin = JSON.parse(localStorage.getItem('adminLogin'));
@@ -444,7 +444,7 @@ export const actGetWaitingUsers = (courseID) => {
     }
 }
 
-// get registered user list
+// *get registered user list
 export const actGetRegisteredUsers = (courseID) => {
     return (dispatch) => {
         const admin = JSON.parse(localStorage.getItem('adminLogin'));
@@ -463,7 +463,7 @@ export const actGetRegisteredUsers = (courseID) => {
     }
 }
 
-// register user
+// *register user
 export const actRegiterUser = (courseID, userAccount) => {
     return () => {
         const admin = JSON.parse(localStorage.getItem('adminLogin'));
@@ -480,7 +480,7 @@ export const actRegiterUser = (courseID, userAccount) => {
     }
 }
 
-// deregister user
+// *deregister user
 export const actDeregisterUser = (courseID, userAccount) => {
     return () => {
         const admin = JSON.parse(localStorage.getItem('adminLogin'));
@@ -497,7 +497,7 @@ export const actDeregisterUser = (courseID, userAccount) => {
     }
 }
 
-// get unregister course list 
+// *get unregister course list 
 export const actGetUnregisterCourses = (account) => {
     return (dispacth) => {
         const admin = JSON.parse(localStorage.getItem('adminLogin'));
@@ -517,7 +517,7 @@ export const actGetUnregisterCourses = (account) => {
             })
     }
 }
-// get unregister course list 
+// *get unregister course list 
 export const actGetWaitingCourses = (account) => {
     return (dispacth) => {
         const admin = JSON.parse(localStorage.getItem('adminLogin'));
@@ -537,7 +537,7 @@ export const actGetWaitingCourses = (account) => {
             })
     }
 }
-// get unregister course list 
+// *get unregister course list 
 export const actGetRegisteredCourses = (account) => {
     return (dispacth) => {
         const admin = JSON.parse(localStorage.getItem('adminLogin'));
