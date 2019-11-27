@@ -96,7 +96,7 @@ class Navbar extends Component {
                     <div className="col-xl-7 col-lg-6 col-md-9 py-4">
                         <div className="header__left d-flex">
                             <a className="navbar-brand" href="/">
-                                <img src="./img/logo-coral.svg" alt="/" />
+                                <img src="/img/logo-coral.svg" alt="/" />
                             </a>
                             <ul className="exo-menu">
                                 <li className="drop-down">

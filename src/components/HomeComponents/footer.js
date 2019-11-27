@@ -54,7 +54,7 @@ export default function Footer() {
                 <div className="footer-bottom">
                     <div className="row">
                         <div className="col-sm-6 footer-left">
-                            <img src="./img/logo-coral.svg" alt="/" />
+                            <img src="/img/logo-coral.svg" alt="/" />
                             <span> Copyright © 2019 Udemy, Inc.</span>
                         </div>
                         <div className="col-sm-6 footer-right">
